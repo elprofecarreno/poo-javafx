@@ -10,6 +10,11 @@ Videos de instalación: [Instalación Apache Netbeans](https://youtu.be/FyIqizc9
   Proyecto base en JavaFX con Maven para verificar que el entorno de desarrollo funciona correctamente.  
   Video: [Proyecto 01 - poo-javafx](https://youtu.be/LNzMEThVvqE)
 
+- [02 - poo-javafx](02/README.md)  
+  Proyecto base en JavaFX con Maven donde se construye un nuevo formulario para el login.  
+  Video: [Proyecto 02 - poo-javafx](https://youtu.be/pcXH2h_e_fw)
+
+
 ## Objetivo general
 
 El repositorio busca practicar los pilares de la programación orientada a objetos en Java, incluyendo:
