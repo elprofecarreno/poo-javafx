@@ -4,7 +4,21 @@ Este repositorio contiene una serie de ejercicios prácticos de Programación Or
 
 ## Índice de proyectos
 
-Videos de instalación: [Instalación Apache Netbeans](https://youtu.be/FyIqizc9t0k) y [Instalación Apache Netbeans en Linux](https://youtu.be/gBkCYiTq6ro).
+Videos de instalación: 
+
+[Instalación JDK + Maven en Windows](https://youtu.be/8gooYj4gQ-Q) 
+
+[Gluon Scene Builder - Instalación en Windows !!!](https://youtu.be/69Bo7d2agUY)
+
+[Instalación JDK + Maven en Linux](https://youtu.be/X0TGKU0gBRc)
+
+[Gluon Scene Builder - Instalación en Linux !!!](https://youtu.be/QW46As8wLOc)
+
+
+Repositorios instaladores:
+
+[Visual Code Instalador en Linux !!!](https://github.com/elprofecarreno/visual-code-linux-install)
+
 
 - [01 - poo-javafx](01/README.md)  
   Proyecto base en JavaFX con Maven para verificar que el entorno de desarrollo funciona correctamente.  
