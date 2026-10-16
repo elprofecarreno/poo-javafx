@@ -1,65 +1,106 @@
 # POO Fundamentos
 
-Este repositorio contiene una serie de ejercicios prácticos de Programación Orientada a Objetos en Java, organizados por carpetas del 01 al 14. Cada proyecto avanza en conceptos como encapsulamiento, abstracción, composición, herencia, uso de utilidades y gestión de menús interactivos.
+Este repositorio contiene una serie de ejercicios prácticos de Programación Orientada a Objetos en Java con JavaFX y Maven, organizados de forma incremental por carpetas del 01 en adelante. Cada proyecto avanza progresivamente en conceptos fundamentales de POO, arquitectura de software, separación de responsabilidades, diseño de interfaces gráficas, manejo de excepciones y persistencia de datos.
+
+## Herramientas e Instalación
+
+### Videos de instalación:
+- [Instalación JDK + Maven en Windows](https://youtu.be/8gooYj4gQ-Q)
+- [Gluon Scene Builder - Instalación en Windows !!!](https://youtu.be/69Bo7d2agUY)
+- [Instalación JDK + Maven en Linux](https://youtu.be/X0TGKU0gBRc)
+- [Gluon Scene Builder - Instalación en Linux !!!](https://youtu.be/QW46As8wLOc)
+
+### Repositorios instaladores:
+- [Visual Code Instalador en Linux !!!](https://github.com/elprofecarreno/visual-code-linux-install)
+
+---
 
 ## Índice de proyectos
 
-Videos de instalación: 
-
-[Instalación JDK + Maven en Windows](https://youtu.be/8gooYj4gQ-Q) 
-
-[Gluon Scene Builder - Instalación en Windows !!!](https://youtu.be/69Bo7d2agUY)
-
-[Instalación JDK + Maven en Linux](https://youtu.be/X0TGKU0gBRc)
-
-[Gluon Scene Builder - Instalación en Linux !!!](https://youtu.be/QW46As8wLOc)
-
-
-Repositorios instaladores:
-
-[Visual Code Instalador en Linux !!!](https://github.com/elprofecarreno/visual-code-linux-install)
-
-
 - [01 - JavaFX (POO)](01/README.md)  
-  Proyecto base en JavaFX con Maven para verificar que el entorno de desarrollo funciona correctamente.  
-
+  Proyecto inicial y verificación del entorno de desarrollo JavaFX con Maven. Implementa la carga básica de vistas FXML y la navegación entre pantallas (`primary` y `secondary`) con controladores desacoplados.  
   Video: [Proyecto 01 - poo-javafx](https://youtu.be/LNzMEThVvqE)
 
 - [02 - JavaFX Login 1/3 - POO](02/README.md)  
-  Proyecto base en JavaFX con Maven donde se construye un nuevo formulario para el login.  
-
+  Construcción del formulario de inicio de sesión (Login) utilizando FXML y un controlador asociado (`LoginController`). Captura credenciales ingresadas por el usuario mediante componentes `TextField` y gestiona el evento de acceso imprimiendo los datos por consola.  
   Video: [Proyecto 02 - poo-javafx](https://youtu.be/pcXH2h_e_fw)
 
 - [03 - JavaFX Login 2/3 - POO](03/README.md)  
-  Proyecto base en JavaFX con Maven donde se realiza refactorización del login.  
-
+  Refactorización del formulario de Login y separación de responsabilidades. Se organizan los controladores en su propio paquete (`controller`), se centralizan los archivos de vista en `resources/views/`, se añade `PasswordField` para enmascarar contraseñas y se configura el sistema modular de Java (`module-info.java`) con directivas `opens ... to javafx.fxml`.  
   Video: [Proyecto 03 - poo-javafx](https://youtu.be/KoVUImFKGJk)
 
 - [04 - JavaFX Login 3/3 - POO](04/README.md)  
-  Proyecto base en JavaFX con Maven donde se realiza login desde un almacen de datos que es un archivo de texto plano en formato json.
-
+  Evolución hacia una arquitectura por capas (Presentación -> Negocio -> Acceso a Datos). Implementa autenticación contra un almacén de datos en archivo de texto plano JSON (`authentication.json`) usando **Google Gson**, la biblioteca **Lombok**, el patrón **DTO** (`UserDTO`), la entidad `User`, excepciones personalizadas (`DAOException`) y configuración modular con reflexión.  
   Video: [Proyecto 04 - poo-javafx](https://youtu.be/xijdq06FSpg)
 
-  
+---
+
+## Evolución pedagógica de los proyectos
+
+| Proyecto | Enfoque principal | Componentes clave | Persistencia / Datos | Dependencias adicionales |
+| :--- | :--- | :--- | :--- | :--- |
+| **01** | Entorno y navegación básica | `App`, `PrimaryController`, `SecondaryController` | N/A | JavaFX Controls & FXML |
+| **02** | Formulario de Login inicial | `LoginController`, `login.fxml` | En memoria / consola | JavaFX Controls & FXML |
+| **03** | Separación y modularidad | Paquete `controller`, carpeta `views/`, `PasswordField`, `module-info.java` | En memoria / consola | JavaFX Controls & FXML |
+| **04** | Arquitectura en capas y patrones | Capas `controller`, `service`, `dao`, `UserDTO`, `DAOException` | Archivo plano JSON (`authentication.json`) | Gson 2.14.0, Lombok 1.18.36 |
+
+---
 
 ## Objetivo general
 
-El repositorio busca practicar los pilares de la programación orientada a objetos en Java, incluyendo:
+El repositorio busca desarrollar habilidades sólidas en el diseño y construcción de aplicaciones orientadas a objetos en Java, abordando:
 
-- encapsulamiento
-- abstracción
-- composición y asociación
-- herencia
-- uso de clases utilitarias
-- interacción visual con JavaFX
-- diseño de formularios y interfaces gráficas
-- modelado de clases con relaciones reales del dominio
-- interfaces y polimorfismo en etapas posteriores
+- **Pilares de POO**: Encapsulamiento, abstracción, modularidad, relaciones entre objetos y separación de responsabilidades.
+- **Arquitectura y Patrones de Diseño**: Organización en capas (Presentación, Servicio, DAO), uso de objetos de transferencia de datos (**DTO**) y desacoplamiento de fuentes de datos.
+- **Manejo de Excepciones**: Creación y propagación de excepciones personalizadas para modelar errores de acceso a datos y reglas de negocio.
+- **Persistencia y Serialización**: Lectura y deserialización de archivos de texto plano en formato JSON mediante bibliotecas especializadas como Google Gson.
+- **Interfaces Gráficas (GUI)**: Diseño de vistas declarativas con FXML, contenedores (`GridPane`, `VBox`) y componentes de entrada de datos con JavaFX.
+- **Sistema de Módulos de Java (JPMS)**: Configuración adecuada de `module-info.java`, gestionando directivas `requires`, `exports` y `opens` para permitir reflexión en tiempo de ejecución.
+
+---
+
+## Requisitos y Ejecución
+
+### Requisitos
+- **Java JDK**: 11 o superior (recomendado JDK 21)
+- **Apache Maven**: 3.8+
+- **IDE**: IntelliJ IDEA, Visual Studio Code, Eclipse o NetBeans
+
+### Ejecutar cualquier proyecto
+
+Puedes ejecutar cualquiera de los proyectos entrando a su respectiva carpeta:
+
+```bash
+cd 04/poo-javafx
+mvn clean javafx:run
+```
+
+O directamente desde la raíz del repositorio indicando la ruta del `pom.xml`:
+
+```bash
+# Ejemplo para ejecutar el proyecto 04
+mvn -f 04/poo-javafx/pom.xml clean javafx:run
+```
+
+---
 
 ## Estructura del repositorio
 
-Cada carpeta incluye su propio proyecto Java con su respectivo README y diagrama de clases, permitiendo estudiar la evolución del diseño a lo largo de los ejercicios.
+Cada carpeta contiene su propio proyecto Maven independiente, acompañado de su respectivo `README.md` detallado y diagrama de clases en Mermaid:
 
-## Repositorio
-
-Este proyecto está organizado como una colección de ejercicios progresivos para aprender POO en Java desde conceptos básicos hasta estructuras más complejas.
+```text
+poo-javafx/
+├── README.md              # Documentación general del repositorio
+├── 01/                    # 01 - JavaFX (POO)
+│   ├── README.md
+│   └── poo-javafx/
+├── 02/                    # 02 - JavaFX Login 1/3 - POO
+│   ├── README.md
+│   └── poo-javafx/
+├── 03/                    # 03 - JavaFX Login 2/3 - POO
+│   ├── README.md
+│   └── poo-javafx/
+└── 04/                    # 04 - JavaFX Login 3/3 - POO
+    ├── README.md
+    └── poo-javafx/
+```
