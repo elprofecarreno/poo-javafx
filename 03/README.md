@@ -13,17 +13,17 @@ El controlador `LoginController` (ubicado en el paquete `cl.elprofecarreno.app.c
 ```mermaid
 classDiagram
     class App {
-        -scene: Scene$
+        -scene: Scene
         +start(stage: Stage) void
         +main(args: String[])$ void
-        ~setRoot(parent: Parent)$ void
-        -getLoadFXML(fxml: String)$ Parent
+        +setRoot(parent: Parent) void
+        -getLoadFXML(fxml: String) Parent
     }
 
     class LoginController {
         -txtUsuario: TextField
         -txtContrasenia: TextField
-        -login() void
+        +login() void
     }
 
     class LoginView {
@@ -35,9 +35,9 @@ classDiagram
         +btnLogin: Button
     }
 
-    App --> LoginView : carga /views/login.fxml
-    LoginView --> LoginController : fx:controller
-    LoginController ..> App : controlador asociado
+    App --> LoginView
+    LoginView --> LoginController
+    LoginController ..> App : carga la vista login
 ```
 
 ## Estructura de clases y relaciones

@@ -28,6 +28,9 @@ Repositorios instaladores:
   Proyecto base en JavaFX con Maven donde se construye un nuevo formulario para el login.  
   Video: [Proyecto 02 - poo-javafx](https://youtu.be/pcXH2h_e_fw)
 
+- [03 - poo-javafx](03/README.md)  
+  Proyecto base en JavaFX con Maven donde se realiza refactorización del login.  
+  Video: [Proyecto 03 - poo-javafx](https://youtu.be/KoVUImFKGJk)
 
 ## Objetivo general
 
