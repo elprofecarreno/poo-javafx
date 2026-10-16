@@ -33,6 +33,10 @@ Este repositorio contiene una serie de ejercicios prácticos de Programación Or
   Evolución hacia una arquitectura por capas (Presentación -> Negocio -> Acceso a Datos). Implementa autenticación contra un almacén de datos en archivo de texto plano JSON (`authentication.json`) usando **Google Gson**, la biblioteca **Lombok**, el patrón **DTO** (`UserDTO`), la entidad `User`, excepciones personalizadas (`DAOException`) y configuración modular con reflexión.  
   Video: [Proyecto 04 - poo-javafx](https://youtu.be/xijdq06FSpg)
 
+- [05 - JavaFX Corrección Fix Lombok - POO](05/README.md)  
+  Corrección, configuración y aprovechamiento integral de la biblioteca **Lombok** y el **patrón Builder**. Se asegura el procesamiento de anotaciones en Maven (`maven-compiler-plugin` con `<annotationProcessorPaths>`) y se refactorizan las clases de modelo (`User` y `UserDTO`) con `@Getter`, `@Setter`, `@Builder`, `@NoArgsConstructor` y `@AllArgsConstructor`, eliminando código repetitivo (*boilerplate*) y utilizando el patrón Builder en la capa de negocio (`LoginService`).  
+  Video: [Proyecto 05 - poo-javafx](https://youtu.be/620ut4c-YH0)
+
 ---
 
 ## Evolución pedagógica de los proyectos
@@ -43,6 +47,7 @@ Este repositorio contiene una serie de ejercicios prácticos de Programación Or
 | **02** | Formulario de Login inicial | `LoginController`, `login.fxml` | En memoria / consola | JavaFX Controls & FXML |
 | **03** | Separación y modularidad | Paquete `controller`, carpeta `views/`, `PasswordField`, `module-info.java` | En memoria / consola | JavaFX Controls & FXML |
 | **04** | Arquitectura en capas y patrones | Capas `controller`, `service`, `dao`, `UserDTO`, `DAOException` | Archivo plano JSON (`authentication.json`) | Gson 2.14.0, Lombok 1.18.36 |
+| **05** | Integración total de Lombok y Patrón Builder | Refactorización de `User` y `UserDTO` con `@Getter`, `@Setter`, `@Builder`, `@NoArgsConstructor`, `@AllArgsConstructor`; instanciación fluida con `UserDTO.builder()` | Archivo plano JSON (`authentication.json`) | Gson 2.14.0, Lombok 1.18.36 (con Annotation Processor en `maven-compiler-plugin`) |
 
 ---
 
@@ -52,10 +57,11 @@ El repositorio busca desarrollar habilidades sólidas en el diseño y construcci
 
 - **Pilares de POO**: Encapsulamiento, abstracción, modularidad, relaciones entre objetos y separación de responsabilidades.
 - **Arquitectura y Patrones de Diseño**: Organización en capas (Presentación, Servicio, DAO), uso de objetos de transferencia de datos (**DTO**) y desacoplamiento de fuentes de datos.
+- **Patrones Creacionales y Reducción de Boilerplate**: Implementación del **patrón Builder** y uso de anotaciones de **Lombok** (`@Builder`, `@Getter`, `@Setter`, etc.) para un código más conciso, mantenible y legible.
 - **Manejo de Excepciones**: Creación y propagación de excepciones personalizadas para modelar errores de acceso a datos y reglas de negocio.
 - **Persistencia y Serialización**: Lectura y deserialización de archivos de texto plano en formato JSON mediante bibliotecas especializadas como Google Gson.
 - **Interfaces Gráficas (GUI)**: Diseño de vistas declarativas con FXML, contenedores (`GridPane`, `VBox`) y componentes de entrada de datos con JavaFX.
-- **Sistema de Módulos de Java (JPMS)**: Configuración adecuada de `module-info.java`, gestionando directivas `requires`, `exports` y `opens` para permitir reflexión en tiempo de ejecución.
+- **Sistema de Módulos de Java (JPMS)**: Configuración adecuada de `module-info.java`, gestionando directivas `requires`, `requires static`, `exports` y `opens` para permitir reflexión en tiempo de ejecución.
 
 ---
 
@@ -64,22 +70,22 @@ El repositorio busca desarrollar habilidades sólidas en el diseño y construcci
 ### Requisitos
 - **Java JDK**: 11 o superior (recomendado JDK 21)
 - **Apache Maven**: 3.8+
-- **IDE**: IntelliJ IDEA, Visual Studio Code, Eclipse o NetBeans
+- **IDE**: IntelliJ IDEA, Visual Studio Code, Eclipse o NetBeans (con soporte para Lombok habilitado)
 
 ### Ejecutar cualquier proyecto
 
 Puedes ejecutar cualquiera de los proyectos entrando a su respectiva carpeta:
 
 ```bash
-cd 04/poo-javafx
+cd 05/poo-javafx
 mvn clean javafx:run
 ```
 
 O directamente desde la raíz del repositorio indicando la ruta del `pom.xml`:
 
 ```bash
-# Ejemplo para ejecutar el proyecto 04
-mvn -f 04/poo-javafx/pom.xml clean javafx:run
+# Ejemplo para ejecutar el proyecto 05
+mvn -f 05/poo-javafx/pom.xml clean javafx:run
 ```
 
 ---
@@ -100,7 +106,10 @@ poo-javafx/
 ├── 03/                    # 03 - JavaFX Login 2/3 - POO
 │   ├── README.md
 │   └── poo-javafx/
-└── 04/                    # 04 - JavaFX Login 3/3 - POO
+├── 04/                    # 04 - JavaFX Login 3/3 - POO
+│   ├── README.md
+│   └── poo-javafx/
+└── 05/                    # 05 - JavaFX Corrección Fix Lombok - POO
     ├── README.md
     └── poo-javafx/
 ```
