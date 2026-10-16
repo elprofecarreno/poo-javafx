@@ -32,6 +32,12 @@ Repositorios instaladores:
   Proyecto base en JavaFX con Maven donde se realiza refactorización del login.  
   Video: [Proyecto 03 - poo-javafx](https://youtu.be/KoVUImFKGJk)
 
+- [04 - poo-javafx](04/README.md)  
+  Proyecto base en JavaFX con Maven donde se realiza login desde un almacen de datos que es un archivo de texto plano en formato json.
+  Video: [Proyecto 04 - poo-javafx](https://youtu.be/xijdq06FSpg)
+
+  
+
 ## Objetivo general
 
 El repositorio busca practicar los pilares de la programación orientada a objetos en Java, incluyendo:
