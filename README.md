@@ -20,20 +20,24 @@ Repositorios instaladores:
 [Visual Code Instalador en Linux !!!](https://github.com/elprofecarreno/visual-code-linux-install)
 
 
-- [01 - poo-javafx](01/README.md)  
+- [01 - JavaFX (POO)](01/README.md)  
   Proyecto base en JavaFX con Maven para verificar que el entorno de desarrollo funciona correctamente.  
+
   Video: [Proyecto 01 - poo-javafx](https://youtu.be/LNzMEThVvqE)
 
-- [02 - poo-javafx](02/README.md)  
+- [02 - JavaFX Login 1/3 - POO](02/README.md)  
   Proyecto base en JavaFX con Maven donde se construye un nuevo formulario para el login.  
+
   Video: [Proyecto 02 - poo-javafx](https://youtu.be/pcXH2h_e_fw)
 
-- [03 - poo-javafx](03/README.md)  
+- [03 - JavaFX Login 2/3 - POO](03/README.md)  
   Proyecto base en JavaFX con Maven donde se realiza refactorización del login.  
+
   Video: [Proyecto 03 - poo-javafx](https://youtu.be/KoVUImFKGJk)
 
-- [04 - poo-javafx](04/README.md)  
+- [04 - JavaFX Login 3/3 - POO](04/README.md)  
   Proyecto base en JavaFX con Maven donde se realiza login desde un almacen de datos que es un archivo de texto plano en formato json.
+
   Video: [Proyecto 04 - poo-javafx](https://youtu.be/xijdq06FSpg)
 
   
