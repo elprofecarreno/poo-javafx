@@ -1,0 +1,44 @@
+{
+  "personas": [
+    {
+      "run" : "12345678",
+      "dv": "9",
+      "nombres" : "Juan",
+      "apellidoPaterno" : "Perez",
+      "apellidoMaterno" : "Gonzalez",
+      "fechaNacimiento" : "1990-01-01",
+      "direccion" : {
+        "calle": "Calle Falsa 123",
+        "numero": "123",
+        "comuna": "Santiago",
+        "region": "Metropolitana"
+      }
+    },{
+      "run" : "87654321",
+      "dv": "0",
+      "nombres" : "Maria",
+      "apellidoPaterno" : "Lopez",
+      "apellidoMaterno" : "Martinez",
+      "fechaNacimiento" : "1985-05-15",
+      "direccion" : {
+        "calle": "Avenida Siempre Viva 456",
+        "numero": "456",
+        "comuna": "Providencia",
+        "region": "Metropolitana"
+      }
+    },{
+        "run" : "11223344",
+        "dv": "1",
+        "nombres" : "Pedro",
+        "apellidoPaterno" : "Gomez",
+        "apellidoMaterno" : "Diaz",
+        "fechaNacimiento" : "1992-07-20",
+        "direccion" : {
+          "calle": "Calle Nueva 789",
+          "numero": "789",
+          "comuna": "Las Condes",
+          "region": "Metropolitana"
+        }
+    }
+  ]
+}

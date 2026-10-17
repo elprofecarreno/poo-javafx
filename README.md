@@ -37,6 +37,9 @@ Este repositorio contiene una serie de ejercicios prácticos de Programación Or
   Corrección, configuración y aprovechamiento integral de la biblioteca **Lombok** y el **patrón Builder**. Se asegura el procesamiento de anotaciones en Maven (`maven-compiler-plugin` con `<annotationProcessorPaths>`) y se refactorizan las clases de modelo (`User` y `UserDTO`) con `@Getter`, `@Setter`, `@Builder`, `@NoArgsConstructor` y `@AllArgsConstructor`, eliminando código repetitivo (*boilerplate*) y utilizando el patrón Builder en la capa de negocio (`LoginService`).  
   Video: [Proyecto 05 - poo-javafx](https://youtu.be/620ut4c-YH0)
 
+- [06 - JavaFX Navegación a Home y Modelo Persona - POO](06/README.md)  
+  Implementa navegación dinámica entre pantallas reemplazando la raíz de la escena (`scene.setRoot`), incorporando la vista principal `Home` con un componente `TableView`. Introduce relaciones de **composición** en el dominio (`Persona` contiene `Direccion`) y el patrón **DTO** (`PersonaDTO`) para el aplanamiento de datos (*flattening*) listos para presentación, consumiendo una colección con estructuras anidadas en JSON (`data.json`).
+
 ---
 
 ## Evolución pedagógica de los proyectos
@@ -48,6 +51,7 @@ Este repositorio contiene una serie de ejercicios prácticos de Programación Or
 | **03** | Separación y modularidad | Paquete `controller`, carpeta `views/`, `PasswordField`, `module-info.java` | En memoria / consola | JavaFX Controls & FXML |
 | **04** | Arquitectura en capas y patrones | Capas `controller`, `service`, `dao`, `UserDTO`, `DAOException` | Archivo plano JSON (`authentication.json`) | Gson 2.14.0, Lombok 1.18.36 |
 | **05** | Integración total de Lombok y Patrón Builder | Refactorización de `User` y `UserDTO` con `@Getter`, `@Setter`, `@Builder`, `@NoArgsConstructor`, `@AllArgsConstructor`; instanciación fluida con `UserDTO.builder()` | Archivo plano JSON (`authentication.json`) | Gson 2.14.0, Lombok 1.18.36 (con Annotation Processor en `maven-compiler-plugin`) |
+| **06** | Navegación entre vistas, composición de entidades y aplanamiento en DTO | `App` (`setRoot`), `LoginController`, `HomeController`, `Persona`, `Direccion`, `PersonaDTO`, `TableView` en `home.fxml` | Archivos planos JSON: `authentication.json` y `data.json` (colección con objetos anidados) | JavaFX Controls & FXML 21, Gson 2.14.0, Lombok 1.18.36 |
 
 ---
 
@@ -55,12 +59,12 @@ Este repositorio contiene una serie de ejercicios prácticos de Programación Or
 
 El repositorio busca desarrollar habilidades sólidas en el diseño y construcción de aplicaciones orientadas a objetos en Java, abordando:
 
-- **Pilares de POO**: Encapsulamiento, abstracción, modularidad, relaciones entre objetos y separación de responsabilidades.
-- **Arquitectura y Patrones de Diseño**: Organización en capas (Presentación, Servicio, DAO), uso de objetos de transferencia de datos (**DTO**) y desacoplamiento de fuentes de datos.
+- **Pilares de POO**: Encapsulamiento, abstracción, modularidad, relaciones entre objetos (**asociación y composición**) y separación de responsabilidades.
+- **Arquitectura y Patrones de Diseño**: Organización en capas (Presentación, Servicio, DAO), uso de objetos de transferencia de datos (**DTO**) para el desacoplamiento y aplanamiento de datos (*data flattening*), y abstracción de fuentes de datos.
 - **Patrones Creacionales y Reducción de Boilerplate**: Implementación del **patrón Builder** y uso de anotaciones de **Lombok** (`@Builder`, `@Getter`, `@Setter`, etc.) para un código más conciso, mantenible y legible.
 - **Manejo de Excepciones**: Creación y propagación de excepciones personalizadas para modelar errores de acceso a datos y reglas de negocio.
-- **Persistencia y Serialización**: Lectura y deserialización de archivos de texto plano en formato JSON mediante bibliotecas especializadas como Google Gson.
-- **Interfaces Gráficas (GUI)**: Diseño de vistas declarativas con FXML, contenedores (`GridPane`, `VBox`) y componentes de entrada de datos con JavaFX.
+- **Persistencia y Serialización**: Lectura y deserialización de archivos de texto plano en formato JSON mediante bibliotecas especializadas como Google Gson, gestionando estructuras anidadas y colecciones.
+- **Interfaces Gráficas (GUI) y Navegación**: Diseño de vistas declarativas con FXML, contenedores (`GridPane`, `VBox`), componentes de entrada de datos, componentes tabulares (`TableView`) y transición dinámica entre pantallas en JavaFX.
 - **Sistema de Módulos de Java (JPMS)**: Configuración adecuada de `module-info.java`, gestionando directivas `requires`, `requires static`, `exports` y `opens` para permitir reflexión en tiempo de ejecución.
 
 ---
@@ -77,15 +81,15 @@ El repositorio busca desarrollar habilidades sólidas en el diseño y construcci
 Puedes ejecutar cualquiera de los proyectos entrando a su respectiva carpeta:
 
 ```bash
-cd 05/poo-javafx
+cd 06/poo-javafx
 mvn clean javafx:run
 ```
 
 O directamente desde la raíz del repositorio indicando la ruta del `pom.xml`:
 
 ```bash
-# Ejemplo para ejecutar el proyecto 05
-mvn -f 05/poo-javafx/pom.xml clean javafx:run
+# Ejemplo para ejecutar el proyecto 06
+mvn -f 06/poo-javafx/pom.xml clean javafx:run
 ```
 
 ---
@@ -109,7 +113,10 @@ poo-javafx/
 ├── 04/                    # 04 - JavaFX Login 3/3 - POO
 │   ├── README.md
 │   └── poo-javafx/
-└── 05/                    # 05 - JavaFX Corrección Fix Lombok - POO
+├── 05/                    # 05 - JavaFX Corrección Fix Lombok - POO
+│   ├── README.md
+│   └── poo-javafx/
+└── 06/                    # 06 - JavaFX Navegación a Home y Modelo Persona - POO
     ├── README.md
     └── poo-javafx/
 ```
