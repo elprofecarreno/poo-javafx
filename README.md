@@ -120,7 +120,7 @@ poo-javafx/
 ├── 05/                    # 05 - JavaFX Corrección Fix Lombok - POO
 │   ├── README.md
 │   └── poo-javafx/
-└── 06/                    # 06 - JavaFX Navegación a Home y Modelo Persona - POO
+└── 06/                    # 06 - JavaFX TableView 1/3 - POO
     ├── README.md
     └── poo-javafx/
 ```
