@@ -19,26 +19,30 @@ Este repositorio contiene una serie de ejercicios prácticos de Programación Or
 
 - [01 - JavaFX (POO)](01/README.md)  
   Proyecto inicial y verificación del entorno de desarrollo JavaFX con Maven. Implementa la carga básica de vistas FXML y la navegación entre pantallas (`primary` y `secondary`) con controladores desacoplados.  
-  Video: [Proyecto 01 - poo-javafx](https://youtu.be/LNzMEThVvqE)
+  Video: [JavaFX (POO)](https://youtu.be/LNzMEThVvqE)
 
 - [02 - JavaFX Login 1/3 - POO](02/README.md)  
   Construcción del formulario de inicio de sesión (Login) utilizando FXML y un controlador asociado (`LoginController`). Captura credenciales ingresadas por el usuario mediante componentes `TextField` y gestiona el evento de acceso imprimiendo los datos por consola.  
-  Video: [Proyecto 02 - poo-javafx](https://youtu.be/pcXH2h_e_fw)
+  Video: [JavaFX Login 1/3 - POO](https://youtu.be/pcXH2h_e_fw)
 
 - [03 - JavaFX Login 2/3 - POO](03/README.md)  
   Refactorización del formulario de Login y separación de responsabilidades. Se organizan los controladores en su propio paquete (`controller`), se centralizan los archivos de vista en `resources/views/`, se añade `PasswordField` para enmascarar contraseñas y se configura el sistema modular de Java (`module-info.java`) con directivas `opens ... to javafx.fxml`.  
-  Video: [Proyecto 03 - poo-javafx](https://youtu.be/KoVUImFKGJk)
+  Video: [JavaFX Login 2/3 - POO](https://youtu.be/KoVUImFKGJk)
 
 - [04 - JavaFX Login 3/3 - POO](04/README.md)  
   Evolución hacia una arquitectura por capas (Presentación -> Negocio -> Acceso a Datos). Implementa autenticación contra un almacén de datos en archivo de texto plano JSON (`authentication.json`) usando **Google Gson**, la biblioteca **Lombok**, el patrón **DTO** (`UserDTO`), la entidad `User`, excepciones personalizadas (`DAOException`) y configuración modular con reflexión.  
-  Video: [Proyecto 04 - poo-javafx](https://youtu.be/xijdq06FSpg)
+  Video: [JavaFX Login 3/3 - POO](https://youtu.be/xijdq06FSpg)
 
 - [05 - JavaFX Corrección Fix Lombok - POO](05/README.md)  
   Corrección, configuración y aprovechamiento integral de la biblioteca **Lombok** y el **patrón Builder**. Se asegura el procesamiento de anotaciones en Maven (`maven-compiler-plugin` con `<annotationProcessorPaths>`) y se refactorizan las clases de modelo (`User` y `UserDTO`) con `@Getter`, `@Setter`, `@Builder`, `@NoArgsConstructor` y `@AllArgsConstructor`, eliminando código repetitivo (*boilerplate*) y utilizando el patrón Builder en la capa de negocio (`LoginService`).  
-  Video: [Proyecto 05 - poo-javafx](https://youtu.be/620ut4c-YH0)
+  Video: [JavaFX Corrección Fix Lombok - POO](https://youtu.be/620ut4c-YH0)
 
-- [06 - JavaFX Navegación a Home y Modelo Persona - POO](06/README.md)  
+- [06 - JavaFX TableView 1/3 - POO](06/README.md)  
   Implementa navegación dinámica entre pantallas reemplazando la raíz de la escena (`scene.setRoot`), incorporando la vista principal `Home` con un componente `TableView`. Introduce relaciones de **composición** en el dominio (`Persona` contiene `Direccion`) y el patrón **DTO** (`PersonaDTO`) para el aplanamiento de datos (*flattening*) listos para presentación, consumiendo una colección con estructuras anidadas en JSON (`data.json`).
+  Video: [JavaFX TableView 1/3 - POO](https://youtu.be/fuaMsaJYDHE)
+
+
+  
 
 ---
 
