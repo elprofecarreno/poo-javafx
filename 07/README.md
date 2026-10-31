@@ -71,10 +71,10 @@ flowchart TB
     PersonaDAO -->|getResourceAsStream| DataJSON
     PersonaDAO -->|Deserializa con TypeToken| GsonEngine
     GsonEngine --> PersonaEntity
-    PersonaEntity *-- DireccionEntity
-    PersonaDAO -->>|List<Persona>| PersonaSvc
+    PersonaEntity -->|Composicion| DireccionEntity
+    PersonaDAO -->|Lista de Persona| PersonaSvc
     PersonaSvc -->|toDto via Builder| PersonaDTO
-    PersonaSvc -->>|List<PersonaDTO>| HomeCtrl
+    PersonaSvc -->|Lista de PersonaDTO| HomeCtrl
     HomeCtrl --> ObsList
     ObsList --> HomeFXML
 ```

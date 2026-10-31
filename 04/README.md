@@ -71,9 +71,9 @@ flowchart TB
     UserDAO -->|4. Deserializa JSON| Gson
     Gson -->|5. Instancia| UserEntity
     UserDAO -.->|Lanza en falla| DAOEx
-    UserDAO -->>|Retorna entidad| LoginSvc
+    UserDAO -->|Retorna entidad| LoginSvc
     LoginSvc -->|6. Mapea User a UserDTO| UserDTO
-    LoginSvc -->>|Retorna DTO| LoginCtrl
+    LoginSvc -->|Retorna DTO| LoginCtrl
     UserEntity -.-> Lombok
     UserDTO -.-> Lombok
 ```

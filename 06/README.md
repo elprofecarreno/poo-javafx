@@ -80,7 +80,7 @@ flowchart TB
     HomeCtrl -.-> PersonaSvc
     PersonaSvc -.-> PersonaDAO
     PersonaDAO -.-> DataJSON
-    PersonaEntity *-- DireccionEntity
+    PersonaEntity -->|Composicion| DireccionEntity
     PersonaSvc -.-> PersonaDTO
 ```
 
