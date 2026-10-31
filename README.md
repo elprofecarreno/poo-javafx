@@ -1,6 +1,6 @@
 # POO Fundamentos con JavaFX, Maven y Arquitectura por Capas
 
-Este repositorio contiene una serie de proyectos prácticos e incrementales de **Programación Orientada a Objetos en Java con JavaFX, Maven y el Sistema de Módulos de Java (JPMS)**, organizados secuencialmente desde la carpeta `01` hasta la `07`.
+Este repositorio contiene una serie de proyectos prácticos e incrementales de **Programación Orientada a Objetos en Java con JavaFX, Maven y el Sistema de Módulos de Java (JPMS)**, organizados secuencialmente desde la carpeta `01` hasta la `08`.
 
 Cada proyecto avanza progresivamente sobre la base del anterior, abordando los fundamentos de POO, la separación de responsabilidades, la arquitectura por capas (**Presentación -> Servicio -> DAO**), los patrones de diseño (**DTO, DAO, Builder**), el enlace de datos reactivo (**Data Binding** en `TableView`), la persistencia en archivos planos JSON (**Google Gson**) y la reducción de código repetitivo (**Project Lombok**).
 
@@ -32,6 +32,7 @@ flowchart TD
     P05["05 - Optimización con Lombok\n• Reducción de Boilerplate\n• Patrón Creacional Builder\n• Procesador de Anotaciones Maven"]
     P06["06 - Navegación y Dominio (1/3)\n• Transición de escena a Home\n• Composición: Persona posee Direccion\n• Aplanamiento DTO (PersonaDTO)"]
     P07["07 - TableView Completo (2/3)\n• Data Binding PropertyValueFactory\n• Deserialización con TypeToken\n• Carga reactiva de personas en tabla"]
+    P08["08 - Eliminación y Persistencia (3/3)\n• Selección con SelectionModel\n• Mapeo bidireccional DTO <-> Entidad\n• Persistencia JSON con FileWriter"]
 
     P01 --> P02
     P02 --> P03
@@ -39,6 +40,7 @@ flowchart TD
     P04 --> P05
     P05 --> P06
     P06 --> P07
+    P07 --> P08
 ```
 
 ---
@@ -74,6 +76,9 @@ Cada carpeta contiene su propio proyecto ejecutable y un `README.md` exhaustivo 
 - [**07 - JavaFX TableView 2/3 - POO**](07/README.md)  
   Implementación integral del enlace de datos (*Data Binding*) sobre `TableView` mediante **`PropertyValueFactory`** y **`ObservableList`**. Desarrolla la lectura de colecciones JSON complejas en `PersonaDAO` mediante **`TypeToken`** y formatos de fecha en Gson, la transformación fluida a DTOs en `PersonaService` con Lombok Builder y la configuración de seguridad reflexiva en `module-info.java` abriendo los DTOs a `javafx.base`.
 
+- [**08 - JavaFX TableView 3/3 - POO**](08/README.md)  
+  Culminación de la funcionalidad del `TableView` integrando interactividad de selección (`SelectionModel`), validación defensiva en UI, eliminación en memoria (`ObservableList`) y persistencia física reescribiendo el archivo plano `data.json` con **Google Gson** y `FileWriter`. Implementa el **mapeo bidireccional** (`toEntity` con Builder) para reconstruir entidades a partir de DTOs enriquecidos.
+
 ---
 
 ## Evolución Pedagógica de los Proyectos
@@ -87,6 +92,7 @@ Cada carpeta contiene su propio proyecto ejecutable y un `README.md` exhaustivo 
 | **05** | Integración total de Lombok y Patrón Builder | Refactorización de `User` y `UserDTO` con anotaciones Lombok; instanciación fluida con `UserDTO.builder()` | Archivo plano JSON (`authentication.json`) | Gson 2.14.0, Lombok 1.18.36 (con Annotation Processor en `maven-compiler-plugin`) |
 | **06** | Navegación entre vistas, composición de entidades y aplanamiento en DTO | `App` (`setRoot`), `LoginController`, `HomeController`, `Persona`, `Direccion`, `PersonaDTO`, `TableView` en `home.fxml` | Archivos planos JSON: `authentication.json` y `data.json` (estructuras anidadas) | JavaFX Controls & FXML 21, Gson 2.14.0, Lombok 1.18.36 |
 | **07** | Enlace de datos reactivo (Data Binding), colecciones genéricas y JPMS avanzado | `HomeController` (`PropertyValueFactory`, `ObservableList`), `PersonaDAO` (`TypeToken`), `PersonaService` (`toDto` con Builder) | Archivo plano JSON: `data.json` (array raíz de personas) | JavaFX Controls & FXML 21, JavaFX Base, Gson 2.14.0, Lombok 1.18.36 |
+| **08** | Interacción, selección de filas, eliminación reactiva y persistencia bidireccional | `HomeController` (`getSelectionModel`, `eliminar`), `PersonaService` (`toEntity`), `PersonaDAO` (`eliminar` con `FileWriter`), `PersonaDTO` | Archivo plano JSON: `data.json` (lectura y sobreescritura) | JavaFX Controls & FXML 21, JavaFX Base, Gson 2.14.0, Lombok 1.18.36 |
 
 ---
 
@@ -170,6 +176,9 @@ mvn -f 04/poo-javafx/pom.xml clean javafx:run
 
 # Ejecutar Proyecto 07
 mvn -f 07/poo-javafx/pom.xml clean javafx:run
+
+# Ejecutar Proyecto 08
+mvn -f 08/poo-javafx/pom.xml clean javafx:run
 ```
 
 ---
@@ -197,7 +206,10 @@ poo-javafx/
 ├── 06/                    # 06 - JavaFX TableView 1/3 (Navegación y Composición de Dominio)
 │   ├── README.md
 │   └── poo-javafx/
-└── 07/                    # 07 - JavaFX TableView 2/3 (Data Binding y Colecciones Gson)
+├── 07/                    # 07 - JavaFX TableView 2/3 (Data Binding y Colecciones Gson)
+│   ├── README.md
+│   └── poo-javafx/
+└── 08/                    # 08 - JavaFX TableView 3/3 (Selección, Eliminación y Persistencia Bidireccional)
     ├── README.md
     └── poo-javafx/
 ```

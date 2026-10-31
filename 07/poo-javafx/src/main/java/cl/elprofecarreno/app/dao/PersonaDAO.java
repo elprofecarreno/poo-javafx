@@ -18,9 +18,13 @@ public class PersonaDAO {
     private static final String FILE = "/data.json";
 
     public List<Persona> findAll()  throws DAOException {
+        // Construir objeto gson para transformar texto (athentication.json) en objetos java
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        // Linea para leer archivo de texto plano en formato .json
         try(Reader reader = new InputStreamReader(getClass().getResourceAsStream(FILE))){
+            // Creando estructura de tipo Lista de Persona
             Type listType = new TypeToken<ArrayList<Persona>>(){}.getType();
+            // Transfomando el contenido JSON (texto) en una estructura de tipo Lista de Persona
             return gson.fromJson(reader, listType);
         }catch(Exception e){
             throw new DAOException("ERROR al leer data.json", e);

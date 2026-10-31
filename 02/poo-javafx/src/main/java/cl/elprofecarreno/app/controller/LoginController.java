@@ -14,6 +14,7 @@ public class LoginController {
 
     @FXML
     private void login() throws IOException {
+        // Mostrar usuario y contraseña en la consola
         System.out.println("USUARIO: " + txtUsuario.getText());
         System.out.println("PASSWORD: " + txtContrasenia.getText());
     }

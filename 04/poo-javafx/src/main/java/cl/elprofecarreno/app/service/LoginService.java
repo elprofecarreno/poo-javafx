@@ -13,7 +13,10 @@ public class LoginService {
     }
 
     public UserDTO authenticate(String username, String password) throws DAOException {
+        // Validar usuario y contraseña con almacen de datos (authentication.json)
+        // En caso de obtener error se propaga a la capa superior
         User user = userDAO.authenticate(username, password);
+        // retorna objeto UserDTO para ello se transforma el objeto User (Entity)
         return new UserDTO(user.getUsername());
     }
 }

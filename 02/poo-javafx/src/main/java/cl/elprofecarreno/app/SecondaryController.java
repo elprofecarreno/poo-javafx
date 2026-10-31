@@ -7,6 +7,7 @@ public class SecondaryController {
 
     @FXML
     private void switchToPrimary() throws IOException {
+        // Cambiar a la escena primaria
         App.setRoot("primary");
     }
 }

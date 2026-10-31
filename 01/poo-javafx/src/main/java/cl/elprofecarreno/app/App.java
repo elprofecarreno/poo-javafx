@@ -17,21 +17,27 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        // Construir venta a partir de primary.fxml con tamaño 640x480 píxeles.
         scene = new Scene(loadFXML("primary"), 640, 480);
+        // Asignar escena a la ventana
         stage.setScene(scene);
+        // Mostrar la ventana 
         stage.show();
     }
 
     static void setRoot(String fxml) throws IOException {
+        // Establecer el nodo raíz de la escena
         scene.setRoot(loadFXML(fxml));
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
+        // Cargar FXML
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
     public static void main(String[] args) {
+        // Iniciar la aplicación
         launch();
     }
 

@@ -21,8 +21,10 @@ public class LoginController {
 
     @FXML
     private void login() throws IOException {
+	// Construyendo objeto service
         loginService = new LoginService();
         try {
+            // autenticar mediante método del service
             UserDTO user = loginService.authenticate(txtUsuario.getText(), txtContrasenia.getText());
             System.out.println("LOGIN CORRECTO");
             System.out.println(user.getUsername());

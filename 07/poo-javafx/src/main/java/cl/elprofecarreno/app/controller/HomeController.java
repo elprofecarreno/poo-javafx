@@ -39,10 +39,12 @@ public class HomeController {
 
     @FXML
     public void initialize(){
-
+        // Inicializar el servicio de personas
         personaService = new PersonaService();
+        // Inicializar la lista de personas observable
         List<PersonaDTO> personas = new ArrayList<>();
 
+        // Configurar las columnas de la tabla con las propiedades de PersonaDTO (Mapeo columnas de la tabla)
         colRun.setCellValueFactory(new PropertyValueFactory<>("runDv"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreCompleto"));
         colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccionCompleto"));
@@ -50,11 +52,13 @@ public class HomeController {
         colRegion.setCellValueFactory(new PropertyValueFactory<>("region"));
         
         try{
+            // Obtener la lista de personas desde el servicio
             personas = personaService.getPersonas();
         }catch(Exception e){
+            // Mostrar mensaje de error en la consola
             System.err.println("Error al obtener las personas: " + e.getMessage());
         }
-
+        // Crear la lista observable a partir de la lista de personas obtenida
         personasObservable = FXCollections.observableArrayList(personas);
         tblPersonas.setItems(personasObservable);
     }
