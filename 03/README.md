@@ -52,7 +52,7 @@ flowchart TB
         ControlsLib["javafx.controls"]
     end
 
-    App -->|getLoadFXML('/views/login')| Loader
+    App -->|Carga vista /views/login| Loader
     Loader -->|Parsea FXML| ViewsFolder
     Loader -.->|Instancia por reflexión| LoginCtrl
     ModInfo -.->|Habilita acceso reflexivo| Loader

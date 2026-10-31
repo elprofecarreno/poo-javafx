@@ -65,8 +65,8 @@ flowchart TB
     end
 
     FXML --> LoginCtrl
-    LoginCtrl -->|1. authenticate(user, pass)| LoginSvc
-    LoginSvc -->|2. authenticate(user, pass)| UserDAO
+    LoginCtrl -->|1. authenticate user pass| LoginSvc
+    LoginSvc -->|2. authenticate user pass| UserDAO
     UserDAO -->|3. Lee archivo| AuthJSON
     UserDAO -->|4. Deserializa JSON| Gson
     Gson -->|5. Instancia| UserEntity

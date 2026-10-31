@@ -69,12 +69,12 @@ flowchart TB
         DataJSON[("data.json\n(Colección Jerárquica)")]
     end
 
-    App -->|start()| LoginView
+    App -->|Inicia escena| LoginView
     LoginView -.-> LoginCtrl
     LoginCtrl --> LoginSvc
     LoginSvc --> UserDAO
     UserDAO --> AuthJSON
-    LoginCtrl -->|Éxito: App.setRoot('/views/home')| App
+    LoginCtrl -->|Exito: setRoot a /views/home| App
     App --> HomeView
     HomeView -.-> HomeCtrl
     HomeCtrl -.-> PersonaSvc

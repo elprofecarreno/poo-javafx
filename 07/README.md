@@ -66,14 +66,14 @@ flowchart TB
     HomeFXML -.->|Inyecta controles| HomeCtrl
     HomeCtrl -->|Configura enlace| JavaFXBase
     JavaFXBase -.->|Inspecciona getters por reflexión| PersonaDTO
-    HomeCtrl -->|getPersonas()| PersonaSvc
-    PersonaSvc -->|findAll()| PersonaDAO
+    HomeCtrl -->|getPersonas| PersonaSvc
+    PersonaSvc -->|findAll| PersonaDAO
     PersonaDAO -->|getResourceAsStream| DataJSON
     PersonaDAO -->|Deserializa con TypeToken| GsonEngine
     GsonEngine --> PersonaEntity
     PersonaEntity *-- DireccionEntity
     PersonaDAO -->>|List<Persona>| PersonaSvc
-    PersonaSvc -->|toDto() vía Builder| PersonaDTO
+    PersonaSvc -->|toDto via Builder| PersonaDTO
     PersonaSvc -->>|List<PersonaDTO>| HomeCtrl
     HomeCtrl --> ObsList
     ObsList --> HomeFXML
