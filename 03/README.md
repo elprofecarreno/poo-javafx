@@ -1,33 +1,90 @@
-# Proyecto 03 - poo-javafx
+# Proyecto 03 - poo-javafx (Login 2/3: Separación de Responsabilidades y Modularidad JPMS)
 
-Este proyecto corresponde a la estructuración y separación de responsabilidades en una aplicación JavaFX con Maven. El objetivo es organizar el código fuente separando los controladores en su propio paquete, centralizar las vistas FXML en una carpeta de recursos dedicada (`views`), implementar el uso de `PasswordField` para campos de contraseña y configurar el sistema de módulos de Java (`module-info.java`) con los permisos requeridos por JavaFX.
+Este proyecto corresponde al **tercer hito incremental** del curso. En esta etapa se refactoriza la estructura del proyecto para adoptar una **separación formal de responsabilidades**: se segregan los controladores en un subpaquete dedicado (`controller`), se centralizan los archivos de interfaz gráfica en un directorio exclusivo de vistas (`resources/views/`), se limpia el código de plantillas heredadas y se configura de forma rigurosa el **Sistema de Módulos de Java (JPMS)** en `module-info.java`.
 
-## ¿Qué hace?
+---
 
-La clase principal `App` inicia la aplicación JavaFX cargando la vista `/views/login.fxml`. La interfaz presenta un formulario de inicio de sesión centrado mediante un contenedor `GridPane` dentro de un `VBox`, con campos para el usuario (`TextField`) y la contraseña oculta (`PasswordField`), además de un botón de acceso.
+## ¿Qué hace el proyecto?
 
-El controlador `LoginController` (ubicado en el paquete `cl.elprofecarreno.app.controller`) gestiona el evento del botón `btnLogin` mediante el método `login()`, capturando los textos ingresados y mostrándolos en la consola del sistema.
+La clase principal `App` inicia la aplicación JavaFX invocando el método utilitario `getLoadFXML("/views/login")`. La interfaz presenta una ventana con el formulario de inicio de sesión centrado mediante un contenedor `GridPane` dentro de un `VBox`. 
 
-## Diagrama de clases
+El usuario ingresa su nombre de usuario en un control `TextField` y su contraseña en un control `PasswordField` (donde los caracteres se enmascaran visualmente por seguridad). Al pulsar el botón `LOGIN`, el evento es atendido por `LoginController` (ubicado en su propio subpaquete `controller`), el cual extrae los textos y los despliega en la consola.
+
+---
+
+## Diferencias Clave: Proyecto 03 vs. Proyecto 02
+
+A continuación se detallan las mejoras arquitectónicas y estructurales introducidas:
+
+| Aspecto | Proyecto 02 | Proyecto 03 (Refactorizado) | Justificación Pedagógica y Técnica |
+| :--- | :--- | :--- | :--- |
+| **Ubicación de Controladores** | En el paquete raíz `cl.elprofecarreno.app`. | En el subpaquete dedicado `cl.elprofecarreno.app.controller`. | Principio de Alta Cohesión: agrupar componentes según su rol arquitectónico. |
+| **Ubicación de Vistas FXML** | Mezcladas en `resources/cl/elprofecarreno/app/`. | Centralizadas en `resources/views/login.fxml`. | Mantenimiento simplificado y separación neta entre recursos estáticos de vista y código Java. |
+| **Carga de Vistas en `App.java`** | Ruta relativa `loadFXML("login")`. | Ruta absoluta del classpath `getLoadFXML("/views/login")`. | Evita errores de resolución de rutas en tiempo de ejecución al modularizar paquetes. |
+| **Firma de `setRoot` en `App.java`** | `setRoot(String fxml)` (recibía el nombre). | `setRoot(Parent parent)` (recibe directamente el nodo raíz cargado). | Desacopla la lógica de carga FXML de la actualización de la escena. |
+| **Configuración Modular (`module-info.java`)** | Solo abría el paquete raíz: `opens cl.elprofecarreno.app to javafx.fxml`. | Abre explícitamente el subpaquete: `opens cl.elprofecarreno.app.controller to javafx.fxml`. | Obligatorio en JPMS: JavaFX requiere permisos de introspección reflexiva para instanciar controladores en subpaquetes. |
+| **Limpieza de Código Muerto** | Conservaba `PrimaryController`, `SecondaryController`, `primary.fxml` y `secondary.fxml`. | Eliminados por completo todos los archivos obsoletos de la plantilla inicial. | Reducción de ruido y deuda técnica en el repositorio. |
+
+---
+
+## Diagrama de Componentes
+
+```mermaid
+flowchart TB
+    subgraph JPMS_Module["Módulo Java (cl.elprofecarreno.app)"]
+        subgraph Pkg_App["Paquete: cl.elprofecarreno.app"]
+            App["App.java\n(Application Base)"]
+        end
+
+        subgraph Pkg_Controller["Paquete: cl.elprofecarreno.app.controller"]
+            LoginCtrl["LoginController.java\n(Manejador de Vista)"]
+        end
+
+        ModInfo["module-info.java\n(opens ...controller to javafx.fxml)"]
+    end
+
+    subgraph Resources["Recursos del Classpath"]
+        ViewsFolder["/views/login.fxml\n(Vista Declarativa)"]
+    end
+
+    subgraph JavaFX_Core["JavaFX Engine"]
+        Loader["FXMLLoader (Reflexión)"]
+        ControlsLib["javafx.controls"]
+    end
+
+    App -->|getLoadFXML('/views/login')| Loader
+    Loader -->|Parsea FXML| ViewsFolder
+    Loader -.->|Instancia por reflexión| LoginCtrl
+    ModInfo -.->|Habilita acceso reflexivo| Loader
+    LoginCtrl -->|Enlaza controles| ControlsLib
+```
+
+---
+
+## Diagrama de Clases
 
 ```mermaid
 classDiagram
-    class App {
-        -scene: Scene
-        +start(stage: Stage) void
-        +main(args: String[])$ void
-        +setRoot(parent: Parent) void
-        -getLoadFXML(fxml: String) Parent
+    namespace cl.elprofecarreno.app {
+        class App {
+            -scene: Scene$
+            +start(stage: Stage) void
+            ~setRoot(parent: Parent)$ void
+            -getLoadFXML(fxml: String)$ Parent
+            +main(args: String[])$ void
+        }
     }
 
-    class LoginController {
-        -txtUsuario: TextField
-        -txtContrasenia: TextField
-        +login() void
+    namespace cl.elprofecarreno.app.controller {
+        class LoginController {
+            -txtUsuario: TextField
+            -txtContrasenia: TextField
+            -login() void
+        }
     }
 
     class LoginView {
-        <<FXML>>
+        <<FXML: /views/login.fxml>>
         +lblUsuario: Label
         +lblContrasenia: Label
         +txtUsuario: TextField
@@ -35,76 +92,187 @@ classDiagram
         +btnLogin: Button
     }
 
-    App --> LoginView
-    LoginView --> LoginController
-    LoginController ..> App : carga la vista login
+    App --> LoginView : carga vía getLoadFXML("/views/login")
+    LoginView --> LoginController : asigna controlador
+    LoginController ..> LoginView : enlaza txtUsuario, txtContrasenia
 ```
 
-## Estructura de clases y relaciones
+---
 
-- **`App`**: Es la clase principal que extiende de `Application`. En el método `start(Stage stage)` inicializa la escena a partir de `/views/login.fxml` mediante el método auxiliar `getLoadFXML()`.
-- **`LoginController`**: Pertenece al paquete `cl.elprofecarreno.app.controller`. Contiene los atributos vinculados mediante `@FXML`:
-  - `txtUsuario`: Control de texto convencional para el nombre de usuario.
-  - `txtContrasenia`: Control para la contraseña (enlazado al `PasswordField` de la vista).
-  - `login()`: Método que se ejecuta al presionar el botón `LOGIN` para leer e imprimir en consola las credenciales ingresadas.
-- **`module-info.java`**: Define el módulo `cl.elprofecarreno.app`. Requiere `javafx.controls` y `javafx.fxml`. Además de abrir el paquete base, abre explícitamente `cl.elprofecarreno.app.controller to javafx.fxml`, lo cual es indispensable para que el motor de JavaFX pueda instanciar e inyectar componentes en el controlador mediante reflexión.
-- **`login.fxml`**: Se localiza de manera ordenada en la ruta `src/main/resources/views/login.fxml`, separando los archivos FXML de la estructura de paquetes de clases Java.
+## Diagrama de Flujo e Interacción de Capas
 
-## Requisitos
+El siguiente diagrama ilustra la interacción modular y la resolución de permisos reflexivos en JPMS:
 
-- Java JDK 11 o superior (compatible con JDK 21)
-- Maven
-- JavaFX
-- IDE compatible con Java (IntelliJ IDEA, VS Code, NetBeans, etc.)
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Usuario
+    participant App as App (cl.elprofecarreno.app)
+    participant Module as module-info.java (JPMS)
+    participant FXMLLoader as FXMLLoader (javafx.fxml)
+    participant FXML as /views/login.fxml
+    participant Ctrl as LoginController (controller)
+    participant Console as System.out (Consola)
 
-## Ejecutar el proyecto
+    Usuario->>App: Ejecuta la aplicación
+    App->>App: start(stage)
+    App->>FXMLLoader: getLoadFXML("/views/login")
+    FXMLLoader->>FXML: Lee y valida estructura XML
+    FXML-->>FXMLLoader: Declara fx:controller="...controller.LoginController"
+    FXMLLoader->>Module: Consulta permisos reflexivos sobre '...controller'
+    Module-->>FXMLLoader: Autorizado (opens ...controller to javafx.fxml)
+    FXMLLoader->>Ctrl: Instancia LoginController y vincula controles
+    FXMLLoader-->>App: Retorna nodo raíz (Parent)
+    App->>App: scene = new Scene(root)
+    App-->>Usuario: Muestra ventana centrada con login
 
-Desde la carpeta del proyecto, ejecuta:
+    Usuario->>FXML: Ingresa credenciales y presiona LOGIN
+    FXML->>Ctrl: Dispara evento onAction -> login()
+    Ctrl->>FXML: Lee txtUsuario.getText() y txtContrasenia.getText()
+    Ctrl->>Console: Imprime credenciales en consola
+```
 
+---
+
+## Paso a Paso para la Construcción Incremental (desde Proyecto 02)
+
+Sigue estos pasos para aplicar la refactorización arquitectónica sobre el Proyecto 02:
+
+### Paso 1: Reorganizar la estructura de paquetes Java
+1. Crea la carpeta `src/main/java/cl/elprofecarreno/app/controller/`.
+2. Mueve la clase `LoginController.java` dentro de dicha carpeta.
+3. Actualiza la declaración del paquete en `LoginController.java`:
+   ```java
+   package cl.elprofecarreno.app.controller;
+   ```
+4. Elimina del paquete raíz los archivos residuales `PrimaryController.java` y `SecondaryController.java`.
+
+### Paso 2: Reorganizar el directorio de recursos de vistas FXML
+1. Crea el directorio `src/main/resources/views/`.
+2. Mueve `login.fxml` hacia `src/main/resources/views/login.fxml`.
+3. Elimina el árbol de carpetas obsoleto `src/main/resources/cl/elprofecarreno/app/`.
+4. En `src/main/resources/views/login.fxml`, actualiza el atributo `fx:controller` apuntando al nuevo subpaquete:
+   ```xml
+   <VBox ... fx:controller="cl.elprofecarreno.app.controller.LoginController">
+   ```
+
+### Paso 3: Actualizar `App.java` con carga absoluta
+Modifica `src/main/java/cl/elprofecarreno/app/App.java`:
+
+```java
+package cl.elprofecarreno.app;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class App extends Application {
+
+    private static Scene scene;
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        scene = new Scene(getLoadFXML("/views/login"));
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    static void setRoot(Parent parent) throws IOException {
+        scene.setRoot(parent);
+    }
+
+    private static Parent getLoadFXML(String fxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        return fxmlLoader.load();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+}
+```
+
+### Paso 4: Configurar los permisos reflexivos en `module-info.java`
+Actualiza `src/main/java/module-info.java` abriendo explícitamente el paquete `controller`:
+
+```java
+module cl.elprofecarreno.app {
+    requires javafx.controls;
+    requires javafx.fxml;
+
+    opens cl.elprofecarreno.app to javafx.fxml;
+    opens cl.elprofecarreno.app.controller to javafx.fxml;
+    exports cl.elprofecarreno.app;
+}
+```
+
+> [!IMPORTANT]
+> Si olvidas la línea `opens cl.elprofecarreno.app.controller to javafx.fxml;`, JavaFX arrojará una excepción `IllegalAccessException` al intentar inyectar el controlador en tiempo de ejecución.
+
+---
+
+## Estructura del Proyecto
+
+```text
+03/
+└── poo-javafx/
+    ├── pom.xml
+    └── src/
+        └── main/
+            ├── java/
+            │   ├── module-info.java
+            │   └── cl/elprofecarreno/app/
+            │       ├── App.java
+            │       └── controller/
+            │           └── LoginController.java
+            └── resources/
+                └── views/
+                    └── login.fxml
+```
+
+---
+
+## Requisitos y Ejecución
+
+### Requisitos
+- **Java JDK**: 11 o superior (recomendado JDK 21).
+- **Apache Maven**: 3.8+.
+- **JavaFX**: 21.
+
+### Ejecución
+Desde la carpeta del proyecto:
 ```bash
-cd poo-javafx
+cd 03/poo-javafx
 mvn clean javafx:run
 ```
 
 O desde la raíz del repositorio:
-
 ```bash
 mvn -f 03/poo-javafx/pom.xml clean javafx:run
 ```
 
-## Resultado esperado
+### Resultado esperado
 
-Al ejecutar la aplicación, se abrirá una ventana de 400x300 con el formulario de login estructurado en una cuadrícula. Al ingresar los datos (con la contraseña enmascarada) y presionar el botón `LOGIN`, se imprimirán los valores en la consola:
+Al ejecutar el proyecto, se despliega el formulario de inicio de sesión refactorizado (400x300):
 
-```text
-USUARIO: <usuario ingresado>
-PASSWORD: <contraseña ingresada>
-```
+#### Captura de la aplicación en ejecución:
+![Formulario de Login Refactorizado](03.png)
 
-## Estructura del proyecto
+Al ingresar credenciales y presionar **LOGIN**, la consola reporta:
 
 ```text
-poo-javafx/
-├── pom.xml
-└── src/
-    └── main/
-        ├── java/
-        │   ├── module-info.java
-        │   └── cl/elprofecarreno/app/
-        │       ├── App.java
-        │       └── controller/
-        │           └── LoginController.java
-        └── resources/
-            └── views/
-                └── login.fxml
+USUARIO: admin
+PASSWORD: miPassword123
 ```
 
-## Objetivo del ejercicio
+---
 
-Este ejercicio pretende comprender cómo:
+## Objetivos Pedagógicos y Buenas Prácticas
 
-- Organizar proyectos JavaFX en paquetes independientes según su responsabilidad (`controller`, vistas).
-- Centralizar y organizar archivos de interfaz FXML dentro del directorio `resources/views/`.
-- Configurar adecuadamente `module-info.java` al trabajar con subpaquetes (`opens ... to javafx.fxml`).
-- Utilizar `PasswordField` en FXML para ocultar la contraseña ingresada por el usuario.
-- Cargar vistas FXML utilizando rutas absolutas al classpath (`/views/...`).
+- **Organización Modular**: Agrupar clases en paquetes por funcionalidad (`controller`, `views`).
+- **Seguridad en JPMS**: Comprender cómo el encapsulamiento de módulos exige aperturas explícitas (`opens`) para librerías basadas en reflexión.
+- **Rutas Absolutas en Recursos**: Utilizar prefijo `/views/` para evitar acoplar la ubicación de los archivos FXML a la estructura de paquetes de Java.

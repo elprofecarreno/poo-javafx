@@ -1,101 +1,142 @@
-# Proyecto 05 - poo-javafx
+# Proyecto 05 - poo-javafx (Corrección Fix Lombok: Patrón Builder y Reducción de Boilerplate)
 
-Este proyecto corresponde a la evolución, corrección y aprovechamiento integral de la biblioteca **Lombok** y el **patrón Builder** en la arquitectura por capas (Controlador, Servicio y DAO) sobre JavaFX con Maven. En el proyecto anterior (04) se sentaron las bases de la arquitectura por capas, la deserialización de credenciales desde un archivo JSON con Google Gson y el manejo de excepciones personalizadas, pero las clases de modelo (`User` y `UserDTO`) aún conservaban código repetitivo (*boilerplate*) escrito a mano.
-
-En este proyecto 05 se refactorizan las clases de datos mediante las anotaciones de Lombok (`@Getter`, `@Setter`, `@Builder`, `@NoArgsConstructor` y `@AllArgsConstructor`), eliminando código redundante, garantizando la correcta compilación mediante el procesador de anotaciones de Maven y aplicando el **patrón de diseño Builder** en la capa de negocio (`LoginService`) para la construcción del DTO de usuario.
+Este proyecto corresponde al **quinto hito incremental** del curso. Se centra en la **optimización del código fuente, la eliminación sistemática de código repetitivo (*boilerplate*)** y la aplicación del **patrón de diseño creacional Builder** mediante la biblioteca **Project Lombok**, resolviendo los desafíos técnicos de compilación y procesamiento de anotaciones dentro de un entorno modular Java (JPMS).
 
 ---
 
-## Diferencias clave respecto al Proyecto 04
+## ¿Qué hace el proyecto?
 
-| Aspecto / Archivo | Proyecto 04 | Proyecto 05 | Beneficio / Justificación |
-| :--- | :--- | :--- | :--- |
-| **`User.java`** (`dao/entity`) | Getters y setters manuales (`getUsername`, `getPassword`, etc.). Sin constructor completo ni builder. | Decorado con `@Getter`, `@Setter`, `@Builder`, `@NoArgsConstructor`, `@AllArgsConstructor`. Sin métodos manuales. | Elimina código repetitivo (*boilerplate*), asegura compatibilidad con Gson y habilita construcción fluida con Builder. |
-| **`UserDTO.java`** (`controller/dto`) | Constructor manual `UserDTO(username)`, getter y setter manuales. | Decorado con `@Getter`, `@Setter`, `@Builder`, `@NoArgsConstructor`, `@AllArgsConstructor`. Sin código redundante. | Clase limpia, concisa y extensible a nuevos campos sin necesidad de reescribir constructores o métodos de acceso. |
-| **`LoginService.java`** (`service`) | Instanciación tradicional por constructor:<br>`return new UserDTO(user.getUsername());` | Construcción mediante **patrón Builder**:<br>`return UserDTO.builder().username(user.getUsername()).build();` | Mayor legibilidad, expresividad declarativa y facilidad de mantenimiento si el DTO incorpora más atributos en el futuro. |
-| **Compilación y Lombok (`pom.xml`)** | Dependencia Lombok presente, pero sin uso completo de sus anotaciones en las entidades. | Integración total: `maven-compiler-plugin` con `<annotationProcessorPaths>` para procesar Lombok durante `javac` en entorno modular JPMS. | Resuelve problemas de compilación y garantiza que el bytecode generado contenga los métodos y la clase builder interna. |
+A nivel funcional, el proyecto mantiene el flujo de autenticación del Proyecto 04 (formulario de login contra el archivo `authentication.json`). Sin embargo, internamente experimenta una profunda refactorización técnica:
 
----
-
-## ¿Qué hace?
-
-La clase principal `App` inicia la aplicación JavaFX cargando la vista `/views/login.fxml`. La interfaz presenta un formulario centrado con campos para usuario (`TextField`), contraseña oculta (`PasswordField`) y el botón `LOGIN`.
-
-Al presionar el botón de acceso, el flujo de ejecución desacoplado se comporta de la siguiente forma:
-
-1. **`LoginController`**: Captura los valores ingresados y solicita la autenticación a `LoginService.authenticate(username, password)`.
-2. **`LoginService`**: Invoca el método `authenticate(...)` de `UserDAO`.
-3. **`UserDAO`**: Lee el archivo `authentication.json` del classpath con `Files.readString(...)`, deserializa los datos a la entidad `User` usando `Gson` (aprovechando `@NoArgsConstructor` y `@SerializedName`) y comprueba la coincidencia de credenciales.
-   - Si las credenciales coinciden, retorna la entidad `User`.
-   - Si no coinciden o falla la lectura, arroja una excepción personalizada `DAOException`.
-4. **Construcción con Builder**: `LoginService` recibe la entidad `User` y crea la respuesta `UserDTO` mediante el **Builder generado por Lombok**:
+1. Las clases de modelo (`User`) y transferencia (`UserDTO`) se despojan de decenas de líneas de código manual (constructores, *getters* y *setters*).
+2. Se implementa el **patrón Builder** provisto por Lombok, permitiendo construir objetos de manera fluida, legible e inmutable.
+3. En la capa de negocio (`LoginService`), la conversión entre la entidad y el DTO se ejecuta mediante la API fluida del Builder:
    ```java
    return UserDTO.builder()
                  .username(user.getUsername())
                  .build();
    ```
-5. **Respuesta en Presentación**: `LoginController` recibe el `UserDTO` con el usuario autenticado e imprime en consola la confirmación o despliega el mensaje de error si captura una `DAOException`.
+4. Se asegura la interoperabilidad entre el compilador `javac`, el procesador de anotaciones de Lombok y el sistema modular JPMS.
 
 ---
 
-## Diagrama de clases
+## Diferencias Clave: Proyecto 05 vs. Proyecto 04
+
+| Aspecto / Archivo | Proyecto 04 | Proyecto 05 (Lombok Integral) | Beneficio / Justificación |
+| :--- | :--- | :--- | :--- |
+| **`User.java`** (`dao/entity`) | Getters y setters escritos a mano. Sin constructor completo ni builder. | Decorado con `@Getter`, `@Setter`, `@Builder`, `@NoArgsConstructor` y `@AllArgsConstructor`. | Código 100% limpio y libre de boilerplate; Gson puede instanciar con el constructor por defecto y el código puede instanciar con Builder. |
+| **`UserDTO.java`** (`controller/dto`) | Constructor manual `UserDTO(username)` y métodos accesores manuales. | Decorado con `@Getter`, `@Setter`, `@Builder`, `@NoArgsConstructor` y `@AllArgsConstructor`. | Extensibilidad inmediata: añadir nuevos atributos no requiere tocar constructores existentes ni escribir nuevos métodos. |
+| **`LoginService.java`** (`service`) | Instanciación tradicional por constructor: `new UserDTO(user.getUsername())`. | Construcción fluida mediante **patrón Builder**: `UserDTO.builder().username(user.getUsername()).build()`. | Código auto-documentado, mayor legibilidad y protección contra errores de orden en listas de parámetros. |
+| **Procesador de Anotaciones (`pom.xml`)** | Dependencia Lombok presente, pero sin uso intensivo de anotaciones. | Configuración explícita de `<annotationProcessorPaths>` en `maven-compiler-plugin`. | Garantiza que `javac` procese las anotaciones de Lombok durante la compilación antes de generar el bytecode final. |
+| **Descriptor Modular (`module-info.java`)** | `requires static lombok;` | Se ratifica la directiva `requires static lombok;`. | La cláusula `static` declara que Lombok es una dependencia solo para tiempo de compilación (*compile-time only*), no requerida en runtime. |
+
+---
+
+## Diagrama de Componentes
+
+```mermaid
+flowchart TB
+    subgraph Build_Pipeline["Pipeline de Compilación (Maven / javac)"]
+        AnnotationProcessor["Annotation Processor\n(org.projectlombok:lombok)"]
+        BytecodeGen["Generador de Bytecode\n(Inyecta getters, setters y Builder)"]
+    end
+
+    subgraph Module_JPMS["Módulo JPMS: cl.elprofecarreno.app"]
+        subgraph Layer_Presentation["Capa de Presentación"]
+            LoginCtrl["LoginController.java"]
+            UserDTO["UserDTO.java\n<<@Getter, @Setter, @Builder>>"]
+        end
+
+        subgraph Layer_Service["Capa de Negocio"]
+            LoginSvc["LoginService.java\n(Usa UserDTO.builder())"]
+        end
+
+        subgraph Layer_DAO["Capa de Acceso a Datos"]
+            UserDAO["UserDAO.java"]
+            UserEntity["User.java\n<<@Getter, @Setter, @Builder>>"]
+            DAOEx["DAOException.java"]
+        end
+    end
+
+    subgraph Storage["Persistencia"]
+        AuthJSON[("authentication.json")]
+    end
+
+    AnnotationProcessor -->|Procesa anotaciones en compilación| BytecodeGen
+    BytecodeGen --> UserDTO
+    BytecodeGen --> UserEntity
+    LoginCtrl --> LoginSvc
+    LoginSvc -->|Construye DTO con Builder| UserDTO
+    LoginSvc --> UserDAO
+    UserDAO --> AuthJSON
+    UserDAO --> UserEntity
+```
+
+---
+
+## Diagrama de Clases
 
 ```mermaid
 classDiagram
-    class App {
-        -scene: Scene
-        +start(stage: Stage) void
-        +main(args: String[])$ void
-        ~setRoot(parent: Parent)$ void
-        -getLoadFXML(fxml: String)$ Parent
+    namespace controller {
+        class LoginController {
+            -loginService: LoginService
+            -txtUsuario: TextField
+            -txtContrasenia: TextField
+            -login() void
+        }
     }
 
-    class LoginView {
-        <<FXML>>
-        +lblUsuario: Label
-        +lblContrasenia: Label
-        +txtUsuario: TextField
-        +txtContrasenia: PasswordField
-        +btnLogin: Button
+    namespace controller.dto {
+        class UserDTO {
+            <<@Getter, @Setter, @Builder>>
+            <<@NoArgsConstructor, @AllArgsConstructor>>
+            -username: String
+            +getUsername() String
+            +setUsername(username: String) void
+            +builder()$ UserDTOBuilder
+        }
+        class UserDTOBuilder {
+            -username: String
+            +username(username: String) UserDTOBuilder
+            +build() UserDTO
+        }
     }
 
-    class LoginController {
-        -loginService: LoginService
-        -txtUsuario: TextField
-        -txtContrasenia: TextField
-        -login() void
+    namespace service {
+        class LoginService {
+            -userDAO: UserDAO
+            +LoginService()
+            +authenticate(username: String, password: String) UserDTO
+        }
     }
 
-    class LoginService {
-        -userDAO: UserDAO
-        +LoginService()
-        +authenticate(username: String, password: String) UserDTO
+    namespace dao {
+        class UserDAO {
+            +authenticate(username: String, password: String) User
+            +readUser(username: String, password: String) User
+        }
     }
 
-    class UserDAO {
-        +authenticate(username: String, password: String) User
-        +readUser(username: String, password: String) User
-    }
-
-    class User {
-        <<@Getter, @Setter, @Builder>>
-        <<@NoArgsConstructor, @AllArgsConstructor>>
-        -username: String
-        -password: String
-        +getUsername() String
-        +getPassword() String
-        +setUsername(username: String) void
-        +setPassword(password: String) void
-        +builder()$ UserBuilder
-    }
-
-    class UserDTO {
-        <<@Getter, @Setter, @Builder>>
-        <<@NoArgsConstructor, @AllArgsConstructor>>
-        -username: String
-        +getUsername() String
-        +setUsername(username: String) void
-        +builder()$ UserDTOBuilder
+    namespace dao.entity {
+        class User {
+            <<@Getter, @Setter, @Builder>>
+            <<@NoArgsConstructor, @AllArgsConstructor>>
+            -username: String
+            -password: String
+            +getUsername() String
+            +getPassword() String
+            +setUsername(username: String) void
+            +setPassword(password: String) void
+            +builder()$ UserBuilder
+        }
+        class UserBuilder {
+            -username: String
+            -password: String
+            +username(username: String) UserBuilder
+            +password(password: String) UserBuilder
+            +build() User
+        }
     }
 
     class DAOException {
@@ -103,134 +144,183 @@ classDiagram
         +DAOException(message: String, cause: Throwable)
     }
 
-    App --> LoginView
-    LoginView --> LoginController
     LoginController --> LoginService : delega autenticación
     LoginController ..> UserDTO : recibe resultado
     LoginService --> UserDAO : consulta datos
     LoginService ..> User : recibe entidad
-    LoginService ..> UserDTO : instancia con builder()
-    LoginService ..> DAOException : propaga excepción
-    UserDAO ..> User : deserializa desde JSON
-    UserDAO ..> DAOException : lanza en caso de error
+    LoginService ..> UserDTOBuilder : invoca builder()
+    UserDTOBuilder ..> UserDTO : produce instancia
+    UserDAO ..> User : deserializa con Gson
+    UserDAO ..> DAOException : lanza ante error
 ```
 
 ---
 
-## Estructura de clases y relaciones
+## Diagrama de Flujo e Interacción de Capas
 
-- **`App`**: Punto de entrada de la aplicación JavaFX que extiende `Application` y carga la vista principal `/views/login.fxml`.
-- **`LoginController`**: Controlador JavaFX (`cl.elprofecarreno.app.controller`) que captura los eventos de la vista y delega la lógica en `LoginService`, controlando las excepciones con bloques `try-catch`.
-- **`LoginService`**: Capa de negocio (`cl.elprofecarreno.app.service`). Coordina las consultas a `UserDAO` y efectúa la transformación de `User` hacia `UserDTO` empleando el método estático `builder()` provisto por Lombok.
-- **`UserDAO`**: Capa de acceso a datos (`cl.elprofecarreno.app.dao`). Lee el archivo `authentication.json` del classpath y lo convierte a objeto Java mediante `Gson`. Lanza `DAOException` ante cualquier anomalía.
-- **`User`**: Entidad del dominio en `cl.elprofecarreno.app.dao.entity`. Mediante las anotaciones `@Getter`, `@Setter`, `@Builder`, `@NoArgsConstructor` y `@AllArgsConstructor` se generan automáticamente en tiempo de compilación todos los métodos de acceso, constructores y su clase builder interna.
-- **`UserDTO`**: Objeto de transferencia en `cl.elprofecarreno.app.controller.dto`. Al igual que `User`, utiliza las anotaciones de Lombok para exponer de forma limpia los datos requeridos por la vista sin exponer la contraseña.
-- **`DAOException`**: Excepción verificada (`Exception`) personalizada para aislar y reportar fallas en la capa de datos.
-- **`authentication.json`**: Recurso en `src/main/resources/authentication.json` que almacena las credenciales de prueba en formato JSON:
-  ```json
-  {
-      "username": "admin",
-      "password": "qwerty"
-  }
-  ```
-- **`module-info.java`**: Define la configuración del sistema de módulos de Java (JPMS):
-  - `requires static lombok;`: Permite el uso de anotaciones Lombok en tiempo de compilación sin requerir el artefacto en tiempo de ejecución.
-  - `requires javafx.controls;` y `requires javafx.fxml;`: Módulos esenciales de la interfaz gráfica.
-  - `requires com.google.gson;`: Permite la serialización/deserialización de JSON.
-  - `opens cl.elprofecarreno.app.controller to javafx.fxml;`: Otorga acceso reflexivo a JavaFX para enlazar campos y manejadores `@FXML`.
-  - `opens cl.elprofecarreno.app.dao.entity to com.google.gson;`: Otorga acceso reflexivo a Gson para instanciar y poblar campos privados de la clase `User`.
+El siguiente diagrama detalla cómo opera el patrón Builder dentro del flujo de ejecución del servicio:
 
----
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Usuario
+    participant View as login.fxml
+    participant Ctrl as LoginController
+    participant Svc as LoginService
+    participant DAO as UserDAO
+    participant Builder as UserDTO.builder()
+    participant DTO as UserDTO
 
-## Configuración de Lombok en Maven
+    Usuario->>View: Ingresa usuario y contraseña, presiona "LOGIN"
+    View->>Ctrl: onAction -> login()
+    Ctrl->>Svc: authenticate(username, password)
+    Svc->>DAO: authenticate(username, password)
+    DAO-->>Svc: retorna instancia de User ("admin", "qwerty")
 
-Para que Lombok genere el código en tiempo de compilación sin errores, el archivo `pom.xml` requiere dos elementos fundamentales:
+    Note over Svc, Builder: Aplicación del Patrón Builder de Lombok
+    Svc->>Builder: UserDTO.builder()
+    Svc->>Builder: .username(user.getUsername())
+    Svc->>Builder: .build()
+    Builder->>DTO: new UserDTO(username)
+    Builder-->>Svc: retorna instancia inmutable/poblada de UserDTO
 
-1. **Dependencia provista (`provided`)**:
-   ```xml
-   <dependency>
-       <groupId>org.projectlombok</groupId>
-       <artifactId>lombok</artifactId>
-       <version>1.18.36</version>
-       <scope>provided</scope>
-   </dependency>
-   ```
-
-2. **Procesador de anotaciones en el plugin del compilador**:
-   ```xml
-   <plugin>
-       <groupId>org.apache.maven.plugins</groupId>
-       <artifactId>maven-compiler-plugin</artifactId>
-       <version>3.13.0</version>
-       <configuration>
-           <release>11</release>
-           <annotationProcessorPaths>
-               <path>
-                   <groupId>org.projectlombok</groupId>
-                   <artifactId>lombok</artifactId>
-                   <version>1.18.36</version>
-               </path>
-           </annotationProcessorPaths>
-       </configuration>
-   </plugin>
-   ```
-
-Esta configuración asegura que `javac` procese correctamente las anotaciones antes de generar el bytecode final, resolviendo conflictos comunes en entornos Java modernos y modulares.
+    Svc-->>Ctrl: retorna UserDTO
+    Ctrl-->>Usuario: Muestra en consola "LOGIN CORRECTO" y "admin"
+```
 
 ---
 
-## Requisitos
+## Paso a Paso para la Construcción Incremental (desde Proyecto 04)
 
-- Java JDK 11 o superior (recomendado JDK 21)
-- Maven 3.8+
-- JavaFX
-- IDE compatible con Java y soporte para Lombok habilitado (IntelliJ IDEA, VS Code con extensión Lombok, Eclipse/NetBeans)
+Sigue estos pasos para refactorizar el Proyecto 04 e incorporar Lombok y el patrón Builder:
 
----
+### Paso 1: Configurar el procesador de anotaciones en `pom.xml`
+Asegúrate de configurar `maven-compiler-plugin` (versión 3.13.0) con el bloque `<annotationProcessorPaths>`:
 
-## Ejecutar el proyecto
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.13.0</version>
+    <configuration>
+        <release>11</release>
+        <annotationProcessorPaths>
+            <path>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.36</version>
+            </path>
+        </annotationProcessorPaths>
+    </configuration>
+</plugin>
+```
 
-Desde la carpeta del proyecto:
+### Paso 2: Verificar `module-info.java`
+Comprueba que el módulo contemple la directiva estática para Lombok y la apertura para Gson:
+
+```java
+module cl.elprofecarreno.app {
+    requires javafx.controls;
+    requires javafx.fxml;
+
+    requires com.google.gson;
+    requires static lombok;
+
+    opens cl.elprofecarreno.app to javafx.fxml;
+    opens cl.elprofecarreno.app.controller to javafx.fxml;
+    opens cl.elprofecarreno.app.dao.entity to com.google.gson;
+    exports cl.elprofecarreno.app;
+}
+```
+
+### Paso 3: Refactorizar la entidad `User.java`
+Reemplaza el código repetitivo en `src/main/java/cl/elprofecarreno/app/dao/entity/User.java` con las anotaciones de Lombok:
+
+```java
+package cl.elprofecarreno.app.dao.entity;
+
+import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class User {
+    
+    @SerializedName("username")
+    private String username;
+
+    @SerializedName("password")
+    private String password;
+}
+```
+
+### Paso 4: Refactorizar el DTO `UserDTO.java`
+Reemplaza los constructores y métodos en `src/main/java/cl/elprofecarreno/app/controller/dto/UserDTO.java`:
+
+```java
+package cl.elprofecarreno.app.controller.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserDTO {
+    private String username;
+}
+```
+
+### Paso 5: Actualizar `LoginService.java` con el Patrón Builder
+Modifica el método `authenticate` en `src/main/java/cl/elprofecarreno/app/service/LoginService.java` para construir el DTO con el Builder:
+
+```java
+package cl.elprofecarreno.app.service;
+
+import cl.elprofecarreno.app.controller.dto.UserDTO;
+import cl.elprofecarreno.app.dao.UserDAO;
+import cl.elprofecarreno.app.dao.entity.User;
+import cl.elprofecarreno.app.dao.excepcion.DAOException;
+
+public class LoginService {
+    
+    private UserDAO userDAO;
+
+    public LoginService() {
+        this.userDAO = new UserDAO();
+    }
+
+    public UserDTO authenticate(String username, String password) throws DAOException {
+        User user = userDAO.authenticate(username, password);
+        return UserDTO.builder()
+                .username(user.getUsername())
+                .build();
+    }
+}
+```
+
+### Paso 6: Compilar y validar el procesamiento de anotaciones
+Ejecuta la fase de compilación de Maven para comprobar que el procesador genera los métodos correctamente:
 
 ```bash
-cd 05/poo-javafx
-mvn clean javafx:run
-```
-
-O desde la raíz del repositorio:
-
-```bash
-mvn -f 05/poo-javafx/pom.xml clean javafx:run
+mvn clean compile
 ```
 
 ---
 
-## Resultado esperado
-
-Al iniciar la aplicación, se despliega la interfaz gráfica de inicio de sesión:
-
-### Caso exitoso
-Ingresando las credenciales válidas registradas en `authentication.json`:
-- **Usuario:** `admin`
-- **Contraseña:** `qwerty`
-
-Al presionar el botón `LOGIN`, la consola mostrará:
-
-```text
-LOGIN CORRECTO
-admin
-```
-
-### Caso de error
-Ingresando credenciales inválidas o campos vacíos:
-
-```text
-ERROR: login fallido. Usuario o contraseña incorrectos
-```
-
----
-
-## Estructura del proyecto
+## Estructura del Proyecto
 
 ```text
 05/
@@ -262,11 +352,47 @@ ERROR: login fallido. Usuario o contraseña incorrectos
 
 ---
 
-## Objetivo del ejercicio
+## Requisitos y Ejecución
 
-Este ejercicio permite afianzar y comprender:
+### Requisitos
+- **Java JDK**: 11 o superior (recomendado JDK 21).
+- **Apache Maven**: 3.8+.
+- **IDE**: Soporte para Lombok activado (*Annotation Processing* habilitado en Settings/Preferences).
 
-- La eliminación sistemática de código repetitivo (*boilerplate*) en entidades y DTOs mediante las anotaciones de **Lombok** (`@Getter`, `@Setter`, `@NoArgsConstructor`, `@AllArgsConstructor`).
-- La implementación y ventaja del **patrón Builder** (`@Builder`) para construir objetos de transferencia de datos de forma fluida, legible y protegida contra cambios de orden o número de parámetros.
-- La configuración técnica requerida en `pom.xml` (`<annotationProcessorPaths>`) y `module-info.java` (`requires static lombok`) para que el procesador de anotaciones opere de manera transparente en proyectos modulares Java (JPMS).
-- La convivencia armónica entre bibliotecas de reflexión e inyección: JavaFX FXML, Google Gson y Lombok trabajando en conjunto bajo una arquitectura desacoplada por capas.
+### Ejecución
+Desde la carpeta del proyecto:
+```bash
+cd 05/poo-javafx
+mvn clean javafx:run
+```
+
+O desde la raíz del repositorio:
+```bash
+mvn -f 05/poo-javafx/pom.xml clean javafx:run
+```
+
+### Resultado esperado
+
+Al iniciar la aplicación, se despliega la interfaz gráfica del formulario de login:
+
+#### Captura de la aplicación en ejecución:
+![Formulario de Login](05.png)
+
+- Autenticación correcta (`admin` / `qwerty`):
+  ```text
+  LOGIN CORRECTO
+  admin
+  ```
+- Autenticación incorrecta:
+  ```text
+  ERROR: login fallido. Usuario o contraseña incorrectos
+  ```
+
+---
+
+## Objetivos Pedagógicos y Buenas Prácticas
+
+- **Patrón de Diseño Creacional Builder**: Construir objetos complejos de forma declarativa, fluida y con nombres de campo explícitos.
+- **Reducción de Boilerplate**: Delegar en Lombok la creación de código predecible y propenso a errores humanos (*getters*, *setters*, constructores, `toString`, `equals`).
+- **Procesamiento de Anotaciones en Maven**: Comprender el rol de `<annotationProcessorPaths>` en la fase de compilación de Java.
+- **Interoperabilidad en JPMS**: Configurar dependencias en tiempo de compilación con `requires static`.
