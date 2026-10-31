@@ -51,34 +51,42 @@ Cada carpeta contiene su propio proyecto ejecutable y un `README.md` exhaustivo 
 
 - [**01 - JavaFX (POO)**](01/README.md)  
   Proyecto inicial y verificación del entorno de desarrollo JavaFX con Maven. Implementa la carga básica de vistas FXML y la conmutación entre pantallas (`primary` y `secondary`) con controladores desacoplados.  
+
   *Video:* [JavaFX (POO)](https://youtu.be/LNzMEThVvqE)
 
 - [**02 - JavaFX Login 1/3 - POO**](02/README.md)  
-  Construcción del formulario de inicio de sesión (Login) utilizando FXML y su controlador (`LoginController`). Captura credenciales ingresadas por el usuario mediante componentes `TextField` y gestiona el evento de acceso imprimiendo los datos por consola.  
+  Construcción del formulario de inicio de sesión (Login) utilizando FXML y su controlador (`LoginController`). Captura credenciales ingresadas por el usuario mediante componentes `TextField` y gestiona el evento de acceso imprimiendo los datos por consola. 
+
   *Video:* [JavaFX Login 1/3 - POO](https://youtu.be/pcXH2h_e_fw)
 
 - [**03 - JavaFX Login 2/3 - POO**](03/README.md)  
   Refactorización y separación de responsabilidades. Se organizan los controladores en su propio paquete (`controller`), se centralizan los archivos de vista en `resources/views/`, se añade `PasswordField` para enmascarar contraseñas y se configura el sistema modular de Java (`module-info.java`) con directivas `opens ... to javafx.fxml`.  
+
   *Video:* [JavaFX Login 2/3 - POO](https://youtu.be/KoVUImFKGJk)
 
 - [**04 - JavaFX Login 3/3 - POO**](04/README.md)  
-  Evolución hacia una arquitectura formal en 3 capas (Presentación -> Negocio -> Acceso a Datos). Implementa autenticación contra un almacén en archivo de texto plano JSON (`authentication.json`) usando **Google Gson**, la biblioteca **Lombok**, el patrón **DTO** (`UserDTO`), la entidad `User`, excepciones personalizadas (`DAOException`) y configuración modular con reflexión.  
+  Evolución hacia una arquitectura formal en 3 capas (Presentación -> Negocio -> Acceso a Datos). Implementa autenticación contra un almacén en archivo de texto plano JSON (`authentication.json`) usando **Google Gson**, la biblioteca **Lombok**, el patrón **DTO** (`UserDTO`), la entidad `User`, excepciones personalizadas (`DAOException`) y configuración modular con reflexión. 
+
   *Video:* [JavaFX Login 3/3 - POO](https://youtu.be/xijdq06FSpg)
 
 - [**05 - JavaFX Corrección Fix Lombok - POO**](05/README.md)  
   Aprovechamiento integral de **Lombok** y el **patrón Builder**. Se asegura el procesamiento de anotaciones en Maven (`maven-compiler-plugin` con `<annotationProcessorPaths>`) y se refactorizan las clases de modelo (`User` y `UserDTO`) con `@Getter`, `@Setter`, `@Builder`, `@NoArgsConstructor` y `@AllArgsConstructor`, eliminando código repetitivo (*boilerplate*) y utilizando el patrón Builder en la capa de negocio (`LoginService`).  
+
   *Video:* [JavaFX Corrección Fix Lombok - POO](https://youtu.be/620ut4c-YH0)
 
 - [**06 - JavaFX TableView 1/4 - POO**](06/README.md)  
   Implementa navegación dinámica entre pantallas reemplazando la raíz de la escena (`scene.setRoot`), incorporando la vista principal `Home` con un componente `TableView`. Introduce relaciones de **composición** en el dominio (`Persona` contiene `Direccion`) y el patrón **DTO** (`PersonaDTO`) para el aplanamiento de datos (*flattening*) listos para presentación, consumiendo una colección con estructuras anidadas en JSON (`data.json`).  
+
   *Video:* [JavaFX TableView 1/4 - POO](https://youtu.be/fuaMsaJYDHE)
 
 - [**07 - JavaFX TableView 2/4 - POO**](07/README.md)  
-  Implementación integral del enlace de datos (*Data Binding*) sobre `TableView` mediante **`PropertyValueFactory`** y **`ObservableList`**. Desarrolla la lectura de colecciones JSON complejas en `PersonaDAO` mediante **`TypeToken`** y formatos de fecha en Gson, la transformación fluida a DTOs en `PersonaService` con Lombok Builder y la configuración de seguridad reflexiva en `module-info.java` abriendo los DTOs a `javafx.base`.
+  Implementación integral del enlace de datos (*Data Binding*) sobre `TableView` mediante **`PropertyValueFactory`** y **`ObservableList`**. Desarrolla la lectura de colecciones JSON complejas en `PersonaDAO` mediante **`TypeToken`** y formatos de fecha en Gson, la transformación fluida a DTOs en `PersonaService` con Lombok Builder y la configuración de seguridad reflexiva en `module-info.java` abriendo los DTOs a `javafx.base`.  
+
   *Video:* [JavaFX TableView 2/4 - POO](https://youtu.be/5dQlqytwymo)
 
 - [**08 - JavaFX TableView 3/4 - POO**](08/README.md)  
-  Culminación de la funcionalidad del `TableView` integrando interactividad de selección (`SelectionModel`), validación defensiva en UI, eliminación en memoria (`ObservableList`) y persistencia física reescribiendo el archivo plano `data.json` con **Google Gson** y `FileWriter`. Implementa el **mapeo bidireccional** (`toEntity` con Builder) para reconstruir entidades a partir de DTOs enriquecidos.
+  Culminación de la funcionalidad del `TableView` integrando interactividad de selección (`SelectionModel`), validación defensiva en UI, eliminación en memoria (`ObservableList`) y persistencia física reescribiendo el archivo plano `data.json` con **Google Gson** y `FileWriter`. Implementa el **mapeo bidireccional** (`toEntity` con Builder) para reconstruir entidades a partir de DTOs enriquecidos.  
+  
   *Video:* [JavaFX TableView 3/4 - POO](https://youtu.be/765pQZmPnu0)
 
 
