@@ -53,8 +53,8 @@ flowchart TB
     App --> FXMLPrimary
     PrimaryCtrl -.->|Inyecta controles y eventos| FXMLPrimary
     SecondaryCtrl -.->|Inyecta controles y eventos| FXMLSecondary
-    PrimaryCtrl -->|App.setRoot('secondary')| App
-    SecondaryCtrl -->|App.setRoot('primary')| App
+    PrimaryCtrl -->|Invoca setRoot secondary| App
+    SecondaryCtrl -->|Invoca setRoot primary| App
 ```
 
 ---
