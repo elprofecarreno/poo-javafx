@@ -15,22 +15,33 @@ import javafx.collections.ObservableList;
 import java.util.List;
 
 public class HomeController {
-    
+    // Mapeo tabla de personas con fxml
+    // Inicializa el componente con fxml (fx : id = tblPersonas)
     @FXML 
     private TableView<PersonaDTO> tblPersonas;
 
+    // Mapeo columna "Run" de la tabla de personas con fxml
+    // Inicializa el componente con fxml (fx : id = colRun)
     @FXML
     private TableColumn<PersonaDTO, String> colRun;
 
+    // Mapeo columna "Nombre" de la tabla de personas con fxml
+    // Inicializa el componente con fxml (fx : id = colNombre)
     @FXML
     private TableColumn<PersonaDTO, String> colNombre;
 
+    // Mapeo columna "Direccion" de la tabla de personas con fxml
+    // Inicializa el componente con fxml (fx : id = colDireccion)
     @FXML
     private TableColumn<PersonaDTO, String> colDireccion;
 
+    // Mapeo columna "Comuna" de la tabla de personas con fxml
+    // Inicializa el componente con fxml (fx : id = colComuna)
     @FXML
     private TableColumn<PersonaDTO, String> colComuna;
 
+    // Mapeo columna "Region" de la tabla de personas con fxml
+    // Inicializa el componente con fxml (fx : id = colRegion)
     @FXML
     private TableColumn<PersonaDTO, String> colRegion;
 

@@ -1,8 +1,8 @@
 # POO Fundamentos con JavaFX, Maven y Arquitectura por Capas
 
-Este repositorio contiene una serie de proyectos prácticos e incrementales de **Programación Orientada a Objetos en Java con JavaFX, Maven y el Sistema de Módulos de Java (JPMS)**, organizados secuencialmente desde la carpeta `01` hasta la `08`.
+Este repositorio contiene una serie de proyectos prácticos e incrementales de **Programación Orientada a Objetos en Java con JavaFX, Maven y el Sistema de Módulos de Java (JPMS)**, organizados secuencialmente desde la carpeta `01` hasta la `09`.
 
-Cada proyecto avanza progresivamente sobre la base del anterior, abordando los fundamentos de POO, la separación de responsabilidades, la arquitectura por capas (**Presentación -> Servicio -> DAO**), los patrones de diseño (**DTO, DAO, Builder**), el enlace de datos reactivo (**Data Binding** en `TableView`), la persistencia en archivos planos JSON (**Google Gson**) y la reducción de código repetitivo (**Project Lombok**).
+Cada proyecto avanza progresivamente sobre la base del anterior, abordando los fundamentos de POO, la separación de responsabilidades, la arquitectura por capas (**Presentación -> Servicio -> DAO**), los patrones de diseño (**DTO, DAO, Builder**), el enlace de datos reactivo (**Data Binding** en `TableView`), la persistencia en archivos planos JSON (**Google Gson**), la reducción de código repetitivo (**Project Lombok**), los principios avanzados de POO (**Herencia, Polimorfismo e Interfaces**) y la construcción de formularios maestros interactivos con paneles dinámicos (**TitledPane, ComboBox, CheckBox**).
 
 ---
 
@@ -33,6 +33,7 @@ flowchart TD
     P06["06 - Navegación y Dominio (1/3)\n• Transición de escena a Home\n• Composición: Persona posee Direccion\n• Aplanamiento DTO (PersonaDTO)"]
     P07["07 - TableView Completo (2/3)\n• Data Binding PropertyValueFactory\n• Deserialización con TypeToken\n• Carga reactiva de personas en tabla"]
     P08["08 - Eliminación y Persistencia (3/3)\n• Selección con SelectionModel\n• Mapeo bidireccional DTO <-> Entidad\n• Persistencia JSON con FileWriter"]
+    P09["09 - Formulario Maestro y Herencia (4/4)\n• Herencia DTO (Alumno/Profesor)\n• Interfaz IRemunerable y Polimorfismo\n• UI dinámica con TitledPane y ComboBox\n• Redimensionamiento y centrado de Stage"]
 
     P01 --> P02
     P02 --> P03
@@ -41,6 +42,7 @@ flowchart TD
     P05 --> P06
     P06 --> P07
     P07 --> P08
+    P08 --> P09
 ```
 
 ---
@@ -74,21 +76,25 @@ Cada carpeta contiene su propio proyecto ejecutable y un `README.md` exhaustivo 
 
   *Video:* [JavaFX Corrección Fix Lombok - POO](https://youtu.be/620ut4c-YH0)
 
-- [**06 - JavaFX TableView 1/4 - POO**](06/README.md)  
+- [**06 - JavaFX TableView 1/5 - POO**](06/README.md)  
   Implementa navegación dinámica entre pantallas reemplazando la raíz de la escena (`scene.setRoot`), incorporando la vista principal `Home` con un componente `TableView`. Introduce relaciones de **composición** en el dominio (`Persona` contiene `Direccion`) y el patrón **DTO** (`PersonaDTO`) para el aplanamiento de datos (*flattening*) listos para presentación, consumiendo una colección con estructuras anidadas en JSON (`data.json`).  
 
-  *Video:* [JavaFX TableView 1/4 - POO](https://youtu.be/fuaMsaJYDHE)
+  *Video:* [JavaFX TableView 1/5 - POO](https://youtu.be/fuaMsaJYDHE)
 
-- [**07 - JavaFX TableView 2/4 - POO**](07/README.md)  
+- [**07 - JavaFX TableView 2/5 - POO**](07/README.md)  
   Implementación integral del enlace de datos (*Data Binding*) sobre `TableView` mediante **`PropertyValueFactory`** y **`ObservableList`**. Desarrolla la lectura de colecciones JSON complejas en `PersonaDAO` mediante **`TypeToken`** y formatos de fecha en Gson, la transformación fluida a DTOs en `PersonaService` con Lombok Builder y la configuración de seguridad reflexiva en `module-info.java` abriendo los DTOs a `javafx.base`.  
 
-  *Video:* [JavaFX TableView 2/4 - POO](https://youtu.be/5dQlqytwymo)
+  *Video:* [JavaFX TableView 2/5 - POO](https://youtu.be/5dQlqytwymo)
 
-- [**08 - JavaFX TableView 3/4 - POO**](08/README.md)  
+- [**08 - JavaFX TableView 3/5 - POO**](08/README.md)  
   Culminación de la funcionalidad del `TableView` integrando interactividad de selección (`SelectionModel`), validación defensiva en UI, eliminación en memoria (`ObservableList`) y persistencia física reescribiendo el archivo plano `data.json` con **Google Gson** y `FileWriter`. Implementa el **mapeo bidireccional** (`toEntity` con Builder) para reconstruir entidades a partir de DTOs enriquecidos.  
   
-  *Video:* [JavaFX TableView 3/4 - POO](https://youtu.be/765pQZmPnu0)
+  *Video:* [JavaFX TableView 3/5 - POO](https://youtu.be/765pQZmPnu0)
 
+- [**09 - JavaFX TableView 4/5 - POO**](09/README.md)  
+  Evolución hacia un formulario maestro interactivo y aplicación avanzada de POO mediante **Herencia** e **Interfaces**. Modela especializaciones de dominio extendiendo `PersonaDTO` en `AlumnoDTO` y `ProfesorDTO`, e implementa la interfaz `IRemunerable` para el cálculo de sueldo líquido con polimorfismo. En la interfaz gráfica JavaFX, implementa paneles colapsables `TitledPane`, controles `ComboBox`, `CheckBox`, activación dinámica de formularios según el tipo de persona seleccionado y control dinámico del tamaño y centrado del `Stage` (`setRoot` con dimensiones y `centerOnScreen`).
+
+*Video:* [JavaFX TableView 4/5 - POO](https://youtu.be/PQJw53OmQ8Q)
 
 ---
 
@@ -104,6 +110,7 @@ Cada carpeta contiene su propio proyecto ejecutable y un `README.md` exhaustivo 
 | **06** | Navegación entre vistas, composición de entidades y aplanamiento en DTO | `App` (`setRoot`), `LoginController`, `HomeController`, `Persona`, `Direccion`, `PersonaDTO`, `TableView` en `home.fxml` | Archivos planos JSON: `authentication.json` y `data.json` (estructuras anidadas) | JavaFX Controls & FXML 21, Gson 2.14.0, Lombok 1.18.36 |
 | **07** | Enlace de datos reactivo (Data Binding), colecciones genéricas y JPMS avanzado | `HomeController` (`PropertyValueFactory`, `ObservableList`), `PersonaDAO` (`TypeToken`), `PersonaService` (`toDto` con Builder) | Archivo plano JSON: `data.json` (array raíz de personas) | JavaFX Controls & FXML 21, JavaFX Base, Gson 2.14.0, Lombok 1.18.36 |
 | **08** | Interacción, selección de filas, eliminación reactiva y persistencia bidireccional | `HomeController` (`getSelectionModel`, `eliminar`), `PersonaService` (`toEntity`), `PersonaDAO` (`eliminar` con `FileWriter`), `PersonaDTO` | Archivo plano JSON: `data.json` (lectura y sobreescritura) | JavaFX Controls & FXML 21, JavaFX Base, Gson 2.14.0, Lombok 1.18.36 |
+| **09** | Formulario maestro, herencia en DTOs, interfaces y controles dinámicos de UI | `HomeController` (paneles dinámicos `TitledPane`, combos, guardado), `AlumnoDTO`, `ProfesorDTO`, `IRemunerable`, `App` (`setRoot` redimensionable con `centerOnScreen`) | Archivo plano JSON: `data.json` (lectura y sobreescritura) | JavaFX Controls & FXML 21, JavaFX Base, Gson 2.14.0, Lombok 1.18.36 |
 
 ---
 
@@ -116,7 +123,7 @@ flowchart LR
     subgraph Capa_Presentacion["Capa de Presentación (UI)"]
         Vistas["Vistas FXML\n(/views/*.fxml)"]
         Controladores["Controladores JavaFX\n(LoginController, HomeController)"]
-        DTOs["DTOs de Transferencia\n(UserDTO, PersonaDTO)"]
+        DTOs["DTOs de Transferencia\n(UserDTO, PersonaDTO,\nAlumnoDTO, ProfesorDTO)"]
     end
 
     subgraph Capa_Negocio["Capa de Negocio (Service)"]
@@ -190,6 +197,9 @@ mvn -f 07/poo-javafx/pom.xml clean javafx:run
 
 # Ejecutar Proyecto 08
 mvn -f 08/poo-javafx/pom.xml clean javafx:run
+
+# Ejecutar Proyecto 09
+mvn -f 09/poo-javafx/pom.xml clean javafx:run
 ```
 
 ---
@@ -220,7 +230,12 @@ poo-javafx/
 ├── 07/                    # 07 - JavaFX TableView 2/3 (Data Binding y Colecciones Gson)
 │   ├── README.md
 │   └── poo-javafx/
-└── 08/                    # 08 - JavaFX TableView 3/3 (Selección, Eliminación y Persistencia Bidireccional)
+├── 08/                    # 08 - JavaFX TableView 3/3 (Selección, Eliminación y Persistencia Bidireccional)
+│   ├── README.md
+│   └── poo-javafx/
+└── 09/                    # 09 - JavaFX TableView 4/4 (Formulario Maestro, Herencia en DTOs, Interfaces y Controles Dinámicos)
     ├── README.md
+    ├── 09.png
+    ├── 09_02.png
     └── poo-javafx/
 ```
