@@ -75,27 +75,29 @@ Cada carpeta contiene su propio proyecto ejecutable y un `README.md` exhaustivo 
   Aprovechamiento integral de **Lombok** y el **patrón Builder**. Se asegura el procesamiento de anotaciones en Maven (`maven-compiler-plugin` con `<annotationProcessorPaths>`) y se refactorizan las clases de modelo (`User` y `UserDTO`) con `@Getter`, `@Setter`, `@Builder`, `@NoArgsConstructor` y `@AllArgsConstructor`, eliminando código repetitivo (*boilerplate*) y utilizando el patrón Builder en la capa de negocio (`LoginService`).  
   *Video:* [JavaFX Corrección Fix Lombok - POO](https://youtu.be/620ut4c-YH0)
 
-- [**06 - JavaFX TableView 1/5 - POO**](06/README.md)  
+- [**06 - JavaFX TableView 1/6 - POO**](06/README.md)  
   Implementa navegación dinámica entre pantallas reemplazando la raíz de la escena (`scene.setRoot`), incorporando la vista principal `Home` con un componente `TableView`. Introduce relaciones de **composición** en el dominio (`Persona` contiene `Direccion`) y el patrón **DTO** (`PersonaDTO`) para el aplanamiento de datos (*flattening*) listos para presentación, consumiendo una colección con estructuras anidadas en JSON (`data.json`).  
-  *Video:* [JavaFX TableView 1/5 - POO](https://youtu.be/fuaMsaJYDHE)
+  *Video:* [JavaFX TableView 1/6 - POO](https://youtu.be/fuaMsaJYDHE)
 
-- [**07 - JavaFX TableView 2/5 - POO**](07/README.md)  
+- [**07 - JavaFX TableView 2/6 - POO**](07/README.md)  
   Implementación integral del enlace de datos (*Data Binding*) sobre `TableView` mediante **`PropertyValueFactory`** y **`ObservableList`**. Desarrolla la lectura de colecciones JSON complejas en `PersonaDAO` mediante **`TypeToken`** y formatos de fecha en Gson, la transformación fluida a DTOs en `PersonaService` con Lombok Builder y la configuración de seguridad reflexiva en `module-info.java` abriendo los DTOs a `javafx.base`.  
-  *Video:* [JavaFX TableView 2/5 - POO](https://youtu.be/5dQlqytwymo)
+  *Video:* [JavaFX TableView 2/6 - POO](https://youtu.be/5dQlqytwymo)
 
-- [**08 - JavaFX TableView 3/5 - POO**](08/README.md)  
+- [**08 - JavaFX TableView 3/6 - POO**](08/README.md)  
   Culminación de la funcionalidad del `TableView` integrando interactividad de selección (`SelectionModel`), validación defensiva en UI, eliminación en memoria (`ObservableList`) y persistencia física reescribiendo el archivo plano `data.json` con **Google Gson** y `FileWriter`. Implementa el **mapeo bidireccional** (`toEntity` con Builder) para reconstruir entidades a partir de DTOs enriquecidos.  
-  *Video:* [JavaFX TableView 3/5 - POO](https://youtu.be/765pQZmPnu0)
+  *Video:* [JavaFX TableView 3/6 - POO](https://youtu.be/765pQZmPnu0)
 
-- [**09 - JavaFX TableView 4/5 - POO**](09/README.md)  
+- [**09 - JavaFX TableView 4/6 - POO**](09/README.md)  
   Evolución hacia un formulario maestro interactivo y aplicación avanzada de POO mediante **Herencia** e **Interfaces**. Modela especializaciones de dominio extendiendo `PersonaDTO` en `AlumnoDTO` y `ProfesorDTO`, e implementa la interfaz `IRemunerable` para el cálculo de sueldo líquido con polimorfismo. En la interfaz gráfica JavaFX, implementa paneles colapsables `TitledPane`, controles `ComboBox`, `CheckBox`, activación dinámica de formularios según el tipo de persona seleccionado y control dinámico del tamaño y centrado del `Stage` (`setRoot` con dimensiones y `centerOnScreen`).  
-  *Video:* [JavaFX TableView 4/5 - POO](https://youtu.be/PQJw53OmQ8Q)
+  *Video:* [JavaFX TableView 4/6 - POO](https://youtu.be/PQJw53OmQ8Q)
 
-- [**10 - JavaFX Validación Centralizada y Singleton - POO**](10/README.md)  
-  Creación de una capa desacoplada de validación de UI con el **Patrón Creacional Singleton** (`FormValidator`) y la excepción comprobada `ValidationException`. Refactorización orientada a objetos de `PersonaDTO` como **clase abstracta**, incorporando Lombok **`@SuperBuilder`** en toda la jerarquía de herencia (`AlumnoDTO`, `ProfesorDTO`) para resolver constructores fluidos en clases derivadas. Implementa validaciones de presencia y longitud máxima en el controlador con retroalimentación inmediata en pantalla.
+- [**10 - JavaFX TableView 5/6 - POO**](10/README.md)  
+  Creación de una capa desacoplada de validación de UI con el **Patrón Creacional Singleton** (`FormValidator`) y la excepción comprobada `ValidationException`. Refactorización orientada a objetos de `PersonaDTO` como **clase abstracta**, incorporando Lombok **`@SuperBuilder`** en toda la jerarquía de herencia (`AlumnoDTO`, `ProfesorDTO`) para resolver constructores fluidos en clases derivadas. Implementa validaciones de presencia y longitud máxima en el controlador con retroalimentación inmediata en pantalla.  
+  *Video:* [JavaFX TableView 5/6 - POO](https://youtu.be/765pQZmPnu0)
 
-- [**11 - JavaFX Módulo 11 y Ciclo CRUD Completo - POO**](11/README.md)  
-  Cierre definitivo del **ciclo CRUD completo** (Crear, Leer, Modificar/Refrescar, Eliminar). Integra el algoritmo de **validación de RUT chileno (Módulo 11)** mediante expresiones regulares y cálculo aritmético del dígito verificador. Extiende la capa DAO (`PersonaDAO`) con `save` y control de duplicidad por RUN, optimiza la serialización con **`setPrettyPrinting()`** en Gson para almacenamiento JSON indentado, refactoriza la eliminación (`delete`) con coincidencia de identidad y asegura la recarga reactiva de la grilla directamente desde el archivo persistido.
+- [**11 - JavaFX TableView 6/6 - POO**](11/README.md)  
+  Cierre definitivo del **ciclo CRUD completo** (Crear, Leer, Modificar/Refrescar, Eliminar). Integra el algoritmo de **validación de RUT chileno (Módulo 11)** mediante expresiones regulares y cálculo aritmético del dígito verificador. Extiende la capa DAO (`PersonaDAO`) con `save` y control de duplicidad por RUN, optimiza la serialización con **`setPrettyPrinting()`** en Gson para almacenamiento JSON indentado, refactoriza la eliminación (`delete`) con coincidencia de identidad y asegura la recarga reactiva de la grilla directamente desde el archivo persistido.  
+  *Video:* [JavaFX TableView 6/6 - POO](https://youtu.be/fVsA8jRUMnM)
 
 ---
 
