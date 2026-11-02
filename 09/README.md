@@ -115,13 +115,13 @@ flowchart TB
     HomeCtrl --> BtnDel
     HomeCtrl --> LblMsg
 
-    AlumnoDTO --|> PersonaDTO
-    ProfesorDTO --|> PersonaDTO
-    ProfesorDTO ..|> IRemun
+    AlumnoDTO -->|Hereda de| PersonaDTO
+    ProfesorDTO -->|Hereda de| PersonaDTO
+    ProfesorDTO -.->|Implementa| IRemun
 
     HomeCtrl -->|Consulta y elimina DTOs| PersonaSvc
     PersonaSvc -->|Mapeo inverso / directo| PersonaEntity
-    PersonaEntity *-- DireccionEntity
+    PersonaEntity -->|Composicion| DireccionEntity
     PersonaSvc --> PersonaDAO
     PersonaDAO --> DataJSON
     PersonaDAO ..> DAOEx
@@ -316,7 +316,7 @@ Este diagrama muestra el flujo interactivo cuando el usuario conmuta entre los t
 sequenceDiagram
     autonumber
     actor Usuario
-    participant CmbTipo as ComboBox<String> (cmbTipo)
+    participant CmbTipo as ComboBox [cmbTipo]
     participant HomeCtrl as HomeController
     participant PnlAlu as TitledPane (pnlDatosAlumno)
     participant PnlProf as TitledPane (pnlDatosProfesor)

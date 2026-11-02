@@ -80,7 +80,7 @@ flowchart TB
     HomeCtrl -->|Invoca eliminar| PersonaSvc
     PersonaSvc -->|toEntity via Builder| PersonaEntity
     PersonaEntity -->|Composicion| DireccionEntity
-    PersonaSvc -->|eliminar con List<Persona>| PersonaDAO
+    PersonaSvc -->|eliminar con lista de personas| PersonaDAO
     PersonaDAO -->|Lee estado actual| DataJSON
     PersonaDAO -->|Deserializa con TypeToken| GsonEngine
     PersonaDAO -->|Serializa datos actualizados| GsonEngine
@@ -195,7 +195,7 @@ El siguiente diagrama detalla la interacción paso a paso al momento de eliminar
 sequenceDiagram
     autonumber
     actor Usuario
-    participant Table as TableView<PersonaDTO>
+    participant Table as TableView [PersonaDTO]
     participant Ctrl as HomeController
     participant Lbl as Label (lblMessage)
     participant Svc as PersonaService
