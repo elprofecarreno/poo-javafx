@@ -108,7 +108,7 @@ flowchart TB
     PersonaEntity -->|Composición| DireccionEntity
     PersonaSvc -->|save o delete| PersonaDAO
     PersonaDAO -->|Revisa duplicados y escribe Pretty JSON| DataJSON
-    PersonaDAO ..> DAOEx
+    PersonaDAO -.-> DAOEx
 
     HomeCtrl -->|4. Recarga datos frescos| PersonaSvc
     PersonaSvc -->|Lee estado actual| PersonaDAO
@@ -218,7 +218,7 @@ classDiagram
     HomeController ..> DAOException : captura
     HomeController ..> ValidationException : captura
     PersonaService --> PersonaDAO : invoca save() y delete()
-    PersonaDAO ..> DAOException : lanza
+    PersonaDAO -.-> DAOException : lanza
     PersonaDAO --> Persona : almacena
     Persona *-- Direccion : composición
 ```

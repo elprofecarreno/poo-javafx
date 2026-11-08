@@ -124,7 +124,7 @@ flowchart TB
     PersonaEntity -->|Composicion| DireccionEntity
     PersonaSvc --> PersonaDAO
     PersonaDAO --> DataJSON
-    PersonaDAO ..> DAOEx
+    PersonaDAO -.-> DAOEx
 ```
 
 ---

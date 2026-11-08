@@ -164,7 +164,7 @@ flowchart LR
     Controladores --> Servicios
     Servicios --> Repositorio
     Repositorio --> ContratoDAO
-    ContratoDAO <|.. DAOs
+    DAOs -.-> ContratoDAO
     DAOs <--> JSONFiles
     DAOs --> Entidades
     Entidades -.-> Repositorio

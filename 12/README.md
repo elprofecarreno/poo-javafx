@@ -128,8 +128,8 @@ flowchart TB
 
     AlumnoDAO <-->|Lee / Escribe| AlumnoJSON
     ProfesorDAO <-->|Lee / Escribe| ProfesorJSON
-    AlumnoDAO ..> DAOEx
-    ProfesorDAO ..> DAOEx
+    AlumnoDAO -.-> DAOEx
+    ProfesorDAO -.-> DAOEx
 ```
 
 ---
@@ -397,7 +397,7 @@ flowchart LR
     Controladores --> Servicios
     Servicios --> Repo
     Repo --> Contrato
-    Contrato <|.. DAOs
+    DAOs -.-> Contrato
     DAOs <--> Archivos
     DAOs --> Entidades
     Entidades -.-> Repo
