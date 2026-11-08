@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/25.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cl.elprofecarreno.app.controller.HomeController">
+   <children>
+      <GridPane prefHeight="806.0" prefWidth="1051.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" prefWidth="303.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="938.0" minWidth="10.0" prefWidth="691.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="355.0" minWidth="0.0" prefWidth="0.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="0.0" prefWidth="0.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="223.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="685.0" minHeight="10.0" prefHeight="516.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="308.0" minHeight="0.0" prefHeight="216.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TableView fx:id="tblPersonas" prefHeight="512.0" prefWidth="720.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+              <columns>
+                <TableColumn fx:id="colRun" prefWidth="75.0" text="RUN" />
+                <TableColumn fx:id="colNombre" prefWidth="114.0" text="NOMBRE" />
+                  <TableColumn fx:id="colDireccion" prefWidth="115.0" text="DIRECCION" />
+                  <TableColumn fx:id="colComuna" prefWidth="160.0" text="COMUNA" />
+                  <TableColumn fx:id="colRegion" prefWidth="254.0" text="REGION" />
+              </columns>
+            </TableView>
+            <Label fx:id="lblMessage" disable="true" prefHeight="16.0" prefWidth="449.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <TitledPane fx:id="pnlDatosGenericos" animated="false" prefHeight="366.0" prefWidth="293.0" text="Datos Genericos">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="328.0" prefWidth="291.0">
+                           <children>
+                              <Label fx:id="lblRun" layoutX="14.0" layoutY="22.0" text="RUN" />
+                              <TextField fx:id="txtRun" layoutX="111.0" layoutY="18.0" />
+                              <Label fx:id="lblNombres" layoutX="13.0" layoutY="53.0" text="NOMBRES" />
+                              <TextField fx:id="txtNombres" layoutX="110.0" layoutY="49.0" />
+                              <Label fx:id="lblApellidoPaterno" layoutX="13.0" layoutY="85.0" text="AP. PATERNO" />
+                              <TextField fx:id="txtApellidoPaterno" layoutX="110.0" layoutY="81.0" />
+                              <Label fx:id="lblApellidoMaterno" layoutX="13.0" layoutY="118.0" text="AP. MATERNO" />
+                              <TextField fx:id="txtApellidoMaterno" layoutX="110.0" layoutY="114.0" />
+                              <Label fx:id="lblCalle" layoutX="13.0" layoutY="152.0" text="CALLE" />
+                              <TextField fx:id="txtCalle" layoutX="110.0" layoutY="148.0" />
+                              <Label fx:id="lblNumeroCalle" layoutX="13.0" layoutY="185.0" text="Nº CALLE" />
+                              <TextField fx:id="txtNumeroCalle" layoutX="110.0" layoutY="181.0" />
+                              <Label fx:id="lblComuna" layoutX="12.0" layoutY="215.0" text="COMUNA" />
+                              <ComboBox fx:id="cmbComuna" layoutX="110.0" layoutY="211.0" prefHeight="24.0" prefWidth="170.0" />
+                              <Label fx:id="lblRegion" layoutX="12.0" layoutY="249.0" text="REGION" />
+                              <ComboBox fx:id="cmbRegion" layoutX="110.0" layoutY="245.0" prefHeight="24.0" prefWidth="170.0" />
+                              <CheckBox fx:id="chkActivo" layoutX="113.0" layoutY="309.0" mnemonicParsing="false" text="Activo" />
+                              <Label fx:id="lblTipo" layoutX="12.0" layoutY="283.0" text="TIPO" />
+                              <ComboBox fx:id="cmbTipo" layoutX="110.0" layoutY="279.0" prefHeight="24.0" prefWidth="170.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </TitledPane>
+                  <TitledPane fx:id="pnlDatosAlumno" animated="false" disable="true" layoutY="369.0" prefHeight="122.0" prefWidth="293.0" text="Datos Alumno">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="91.0" prefWidth="291.0">
+                           <children>
+                              <Label fx:id="lblCarrera" layoutX="14.0" layoutY="23.0" text="CARRERA" />
+                              <TextField fx:id="txtCarrera" layoutX="106.0" layoutY="19.0" />
+                              <Label fx:id="lblSemestre" layoutX="14.0" layoutY="55.0" text="SEMESTRE" />
+                              <TextField fx:id="txtSemestre" layoutX="106.0" layoutY="51.0" />
+                           </children></AnchorPane>
+                    </content>
+                  </TitledPane>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <Button fx:id="btnEliminar" layoutX="6.0" layoutY="14.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" />
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <TitledPane fx:id="pnlDatosProfesor" animated="false" disable="true" layoutX="7.0" layoutY="10.0" prefHeight="103.0" prefWidth="286.0" text="Datos Profesor">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="76.0" prefWidth="284.0">
+                           <children>
+                              <Label fx:id="lblEspecialidad" layoutX="6.0" layoutY="14.0" text="ESPECIALIDAD" />
+                              <TextField fx:id="txtEspecialidad" layoutX="106.0" layoutY="10.0" />
+                              <Label fx:id="lblJornada" layoutX="6.0" layoutY="42.0" text="JORNADA" />
+                              <ComboBox fx:id="cmbJornada" layoutX="106.0" layoutY="38.0" prefHeight="24.0" prefWidth="172.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </TitledPane>
+                  <Button fx:id="btnGuardar" layoutX="227.0" layoutY="124.0" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
+               </children>
+            </Pane>
+         </children>
+      </GridPane>
+   </children>
+</VBox>
