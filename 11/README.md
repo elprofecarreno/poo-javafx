@@ -218,7 +218,7 @@ classDiagram
     HomeController ..> DAOException : captura
     HomeController ..> ValidationException : captura
     PersonaService --> PersonaDAO : invoca save() y delete()
-    PersonaDAO -.-> DAOException : lanza
+    PersonaDAO ..> DAOException : lanza
     PersonaDAO --> Persona : almacena
     Persona *-- Direccion : composición
 ```
