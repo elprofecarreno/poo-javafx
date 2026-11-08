@@ -103,6 +103,7 @@ Cada carpeta contiene su propio proyecto ejecutable, un `README.md` exhaustivo (
 
 - [**12 - JavaFX Patrón Repository, IDAO\<T\> y Herencia en Entidades - POO**](12/README.md) · [**Paso a Paso**](12/poo-javafx/README.md)  
   Evolución arquitectónica de la capa de persistencia y dominio mediante el **Patrón Repository** (`PersonaRepository`), contratos genéricos con la interfaz **`IDAO<T>`** y **herencia en entidades de dominio** convirtiendo `Persona` en clase abstracta con **`@SuperBuilder`** y creando las sub-entidades concretas **`Alumno`** y **`Profesor`**. Segrega el almacenamiento físico en archivos JSON independientes (`alumno.json` y `profesor.json`) administrados por `AlumnoDAO` y `ProfesorDAO`, mientras `PersonaRepository` unifica las consultas (`findAll`) y enruta polimórficamente las operaciones de escritura (`save`) y borrado (`delete`) mediante evaluación `instanceof`.
+  *Video:* [JavaFX TableView - Refactor DAO](https://youtu.be/GxmGi0AIyMw)
 
 ---
 
