@@ -101,9 +101,15 @@ Cada carpeta contiene su propio proyecto ejecutable, un `README.md` exhaustivo (
   Cierre del **ciclo CRUD completo** (Crear, Leer, Modificar/Refrescar, Eliminar). Integra el algoritmo de **validación de RUT chileno (Módulo 11)** mediante expresiones regulares y cálculo aritmético del dígito verificador. Extiende la capa DAO (`PersonaDAO`) con `save` y control de duplicidad por RUN, optimiza la serialización con **`setPrettyPrinting()`** en Gson para almacenamiento JSON indentado, refactoriza la eliminación (`delete`) con coincidencia de identidad y asegura la recarga reactiva de la grilla directamente desde el archivo persistido.  
   *Video:* [JavaFX TableView 6/6 - POO](https://youtu.be/fVsA8jRUMnM)
 
-- [**12 - JavaFX Patrón Repository, IDAO\<T\> y Herencia en Entidades - POO**](12/README.md) · [**Paso a Paso**](12/poo-javafx/README.md)  
+- [**12 - JavaFX TableView - Refactor DAO**](12/README.md) · [**Paso a Paso**](12/poo-javafx/README.md)  
   Evolución arquitectónica de la capa de persistencia y dominio mediante el **Patrón Repository** (`PersonaRepository`), contratos genéricos con la interfaz **`IDAO<T>`** y **herencia en entidades de dominio** convirtiendo `Persona` en clase abstracta con **`@SuperBuilder`** y creando las sub-entidades concretas **`Alumno`** y **`Profesor`**. Segrega el almacenamiento físico en archivos JSON independientes (`alumno.json` y `profesor.json`) administrados por `AlumnoDAO` y `ProfesorDAO`, mientras `PersonaRepository` unifica las consultas (`findAll`) y enruta polimórficamente las operaciones de escritura (`save`) y borrado (`delete`) mediante evaluación `instanceof`.
   *Video:* [JavaFX TableView - Refactor DAO](https://youtu.be/GxmGi0AIyMw)
+
+  - [**13 - JavaFX - Oracle Cloud Database**]
+  *Video:* [JavaFX - Oracle Cloud Database](https://youtu.be/eQZgz-wNO74)
+
+  - [**14 - JavaFX - Oracle Database Connection**]
+  *Video:* [JavaFX - Oracle Cloud Database](https://youtu.be/XLmGSSM-YbE)
 
 ---
 
