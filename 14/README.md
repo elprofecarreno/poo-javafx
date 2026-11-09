@@ -96,7 +96,7 @@ flowchart TB
     end
 
     AppMain -->|1. Inicializa Singleton| ConnDB
-    AppMain -->|2. Si conecta OK: launch()| Views
+    AppMain -->|2. Si conecta OK: inicia launch| Views
     Views <--> Controllers
     Controllers --> FormVal
     Controllers --> Services

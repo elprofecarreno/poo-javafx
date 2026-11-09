@@ -1,8 +1,8 @@
 # POO Fundamentos con JavaFX, Maven y Arquitectura por Capas
 
-Este repositorio contiene una serie de proyectos prácticos e incrementales de **Programación Orientada a Objetos en Java con JavaFX, Maven y el Sistema de Módulos de Java (JPMS)**, organizados secuencialmente desde la carpeta `01` hasta la `12`.
+Este repositorio contiene una serie de proyectos prácticos e incrementales de **Programación Orientada a Objetos en Java con JavaFX, Maven y el Sistema de Módulos de Java (JPMS)**, organizados secuencialmente desde la carpeta `01` hasta la `14`.
 
-Cada proyecto avanza progresivamente sobre la base del anterior, abordando los fundamentos de POO, la separación de responsabilidades, la arquitectura por capas (**Presentación -> Servicio -> Repositorio -> DAO**), los patrones de diseño (**DTO, DAO, Repository, Builder, Singleton**), la programación genérica (**Java Generics con `IDAO<T>`**), el enlace de datos reactivo (**Data Binding** en `TableView`), la persistencia en archivos planos JSON segregados (**Google Gson** con **Pretty Printing**), la reducción de código repetitivo (**Project Lombok** con `@SuperBuilder`), los principios avanzados de POO (**Herencia, Clases Abstractas, Polimorfismo e Interfaces** tanto en DTOs como en Entidades de Dominio), la construcción de formularios maestros interactivos con paneles dinámicos (**TitledPane, ComboBox, CheckBox**), el manejo formal de excepciones verificadas (**ValidationException, DAOException**) y algoritmos avanzados de validación nacional (**RUT con Módulo 11 y Expresiones Regulares**).
+Cada proyecto avanza progresivamente sobre la base del anterior, abordando los fundamentos de POO, la separación de responsabilidades, la arquitectura por capas (**Presentación -> Servicio -> Repositorio -> DAO**), los patrones de diseño (**DTO, DAO, Repository, Builder, Singleton**), la programación genérica (**Java Generics con `IDAO<T>`**), el enlace de datos reactivo (**Data Binding** en `TableView`), la persistencia en archivos planos JSON segregados (**Google Gson** con **Pretty Printing**), la reducción de código repetitivo (**Project Lombok** con `@SuperBuilder`), los principios avanzados de POO (**Herencia, Clases Abstractas, Polimorfismo e Interfaces** tanto en DTOs como en Entidades de Dominio), la construcción de formularios maestros interactivos con paneles dinámicos (**TitledPane, ComboBox, CheckBox**), el manejo formal de excepciones verificadas (**ValidationException, DAOException**), algoritmos avanzados de validación nacional (**RUT con Módulo 11 y Expresiones Regulares**) y la integración con bases de datos relacionales en la nube (**Oracle Cloud Autonomous Database** con **Oracle Wallet mTLS**, `ojdbc11` y `oraclepki`).
 
 ---
 
@@ -37,6 +37,8 @@ flowchart TD
     P10["10 - Validación Centralizada y Singleton\n• Patrón Singleton en FormValidator\n• Excepción verificada ValidationException\n• PersonaDTO abstracta y @SuperBuilder\n• Validación condicional en guardar()"]
     P11["11 - Módulo 11 y CRUD Completo\n• Validación de RUT con Módulo 11 y Regex\n• Ciclo CRUD completo en UI y persistencia\n• Control de duplicados en DAO\n• Serialización Pretty JSON con Gson"]
     P12["12 - Patrón Repository e IDAO<T>\n• Interfaz genérica IDAO<T> (Generics)\n• Persona abstracta, Alumno y Profesor\n• PersonaRepository y ruteo polimórfico\n• Almacenamiento segregado alumno/profesor.json"]
+    P13["13 - Oracle Cloud Autonomous DB\n• Creación de instancia ATP Always Free\n• Configuración de usuario ADMIN y mTLS\n• Descarga de Wallet_oracledb.zip\n• Descriptores tnsnames.ora y cwallet.sso"]
+    P14["14 - Conexión JDBC a Oracle Cloud\n• Dependencias ojdbc11 y oraclepki\n• Módulo java.sql en module-info.java\n• Singleton ConnectionOracleCloudDB\n• Validación Fail-Fast en App.main"]
 
     P01 --> P02
     P02 --> P03
@@ -49,6 +51,8 @@ flowchart TD
     P09 --> P10
     P10 --> P11
     P11 --> P12
+    P12 --> P13
+    P13 --> P14
 ```
 
 ---
@@ -102,14 +106,16 @@ Cada carpeta contiene su propio proyecto ejecutable, un `README.md` exhaustivo (
   *Video:* [JavaFX TableView 6/6 - POO](https://youtu.be/fVsA8jRUMnM)
 
 - [**12 - JavaFX TableView - Refactor DAO**](12/README.md) · [**Paso a Paso**](12/poo-javafx/README.md)  
-  Evolución arquitectónica de la capa de persistencia y dominio mediante el **Patrón Repository** (`PersonaRepository`), contratos genéricos con la interfaz **`IDAO<T>`** y **herencia en entidades de dominio** convirtiendo `Persona` en clase abstracta con **`@SuperBuilder`** y creando las sub-entidades concretas **`Alumno`** y **`Profesor`**. Segrega el almacenamiento físico en archivos JSON independientes (`alumno.json` y `profesor.json`) administrados por `AlumnoDAO` y `ProfesorDAO`, mientras `PersonaRepository` unifica las consultas (`findAll`) y enruta polimórficamente las operaciones de escritura (`save`) y borrado (`delete`) mediante evaluación `instanceof`.
+  Evolución arquitectónica de la capa de persistencia y dominio mediante el **Patrón Repository** (`PersonaRepository`), contratos genéricos con la interfaz **`IDAO<T>`** y **herencia en entidades de dominio** convirtiendo `Persona` en clase abstracta con **`@SuperBuilder`** y creando las sub-entidades concretas **`Alumno`** y **`Profesor`**. Segrega el almacenamiento físico en archivos JSON independientes (`alumno.json` y `profesor.json`) administrados por `AlumnoDAO` y `ProfesorDAO`, mientras `PersonaRepository` unifica las consultas (`findAll`) y enruta polimórficamente las operaciones de escritura (`save`) y borrado (`delete`) mediante evaluación `instanceof`.  
   *Video:* [JavaFX TableView - Refactor DAO](https://youtu.be/GxmGi0AIyMw)
 
-  - [**13 - JavaFX - Oracle Cloud Database**]
+- [**13 - JavaFX - Oracle Cloud Database**](13/README.md)  
+  Guía paso a paso de aprovisionamiento de una instancia de base de datos relacional autónoma (**Oracle Cloud Autonomous Database - Always Free**) en **Oracle Cloud Infrastructure (OCI)**. Cubre la configuración de la instancia `oracledb` (Transaction Processing), credenciales de administración (`ADMIN`), políticas de acceso seguro mediante **mTLS** y la generación, descarga y descompresión de la billetera criptográfica (**`Wallet_oracledb.zip`**) con sus descriptores `tnsnames.ora`, `sqlnet.ora` y `cwallet.sso`.  
   *Video:* [JavaFX - Oracle Cloud Database](https://youtu.be/eQZgz-wNO74)
 
-  - [**14 - JavaFX - Oracle Database Connection**]
-  *Video:* [JavaFX - Oracle Cloud Database](https://youtu.be/XLmGSSM-YbE)
+- [**14 - JavaFX - Oracle Database Connection**](14/README.md) · [**Paso a Paso**](14/poo-javafx/README.md)  
+  Integración de la conexión hacia **Oracle Cloud Autonomous Database** en el proyecto JavaFX mediante el driver oficial **`ojdbc11`** y el proveedor de seguridad **`oraclepki`** (`23.26.4.0.0`). Incorpora `requires java.sql;` en `module-info.java`, implementa el gestor de conexión **`ConnectionOracleCloudDB`** bajo el **Patrón Creacional Singleton** utilizando la URL JDBC Thin con `TNS_ADMIN` apuntando al directorio local del Wallet (`oracledb_high`), y añade verificación *Fail-Fast* de conectividad en `App.main()` antes de iniciar el ciclo de vida gráfico.  
+  *Video:* [JavaFX - Oracle Database Connection](https://youtu.be/XLmGSSM-YbE)
 
 ---
 
@@ -129,12 +135,14 @@ Cada carpeta contiene su propio proyecto ejecutable, un `README.md` exhaustivo (
 | **10** | Validación centralizada, patrón Singleton, jerarquía abstracta con `@SuperBuilder` | `FormValidator` (Singleton), `ValidationException`, `PersonaDTO` (abstracta), `AlumnoDTO` y `ProfesorDTO` con `@SuperBuilder`, validación en `guardar()` | Archivo plano JSON: `data.json` (lectura y sobreescritura) | JavaFX Controls & FXML 21, JavaFX Base, Gson 2.14.0, Lombok 1.18.36 |
 | **11** | Validación algorítmica de RUT (Módulo 11), ciclo CRUD completo y Pretty JSON | `FormValidator` (`isRutValid` con Regex y Módulo 11), `PersonaDAO` (`save` con unicidad, `delete`, `setPrettyPrinting`), `PersonaService` (`save`), sincronización reactiva | Archivo plano JSON: `data.json` (CRUD integral con formato Pretty Printing) | JavaFX Controls & FXML 21, JavaFX Base, Gson 2.14.0, Lombok 1.18.36 |
 | **12** | Patrón Repository, interfaz genérica `IDAO<T>`, herencia en entidades y persistencia JSON segregada | `PersonaRepository`, `IDAO<T>`, `AlumnoDAO`, `ProfesorDAO`, `Persona` (abstracta con `@SuperBuilder`), `Alumno`, `Profesor`, `PersonaService` (`toEntity` polimórfico) | Archivos planos JSON segregados: `alumno.json` y `profesor.json` (Pretty Printing) | JavaFX Controls & FXML 21, JavaFX Base, Gson 2.14.0, Lombok 1.18.36 |
+| **13** | Aprovisionamiento de base de datos en la nube y seguridad mTLS | Consola OCI, instancia `oracledb` (ATP Always Free), `Wallet_oracledb.zip` (`tnsnames.ora`, `sqlnet.ora`, `cwallet.sso`) | Oracle Cloud Autonomous Database (`oracledb_high`) | Oracle Cloud Infrastructure (OCI) + Oracle Wallet |
+| **14** | Conexión JDBC Thin a Oracle Cloud con Wallet y Patrón Singleton | `ConnectionOracleCloudDB` (Singleton con `DriverManager` y `TNS_ADMIN`), `App.main` (verificación *Fail-Fast*), `module-info.java` (`requires java.sql`) | Oracle Cloud Autonomous Database (`oracledb_high`) + Archivos JSON | JavaFX 21, Gson 2.14.0, Lombok 1.18.36, `ojdbc11` 23.26.4.0.0, `oraclepki` 23.26.4.0.0 |
 
 ---
 
 ## Arquitectura General por Capas
 
-A partir del Proyecto 04 y culminando en el Proyecto 12, la arquitectura del software sigue una separación estricta en capas (Presentación -> Negocio -> Repositorio -> Acceso a Datos):
+A partir del Proyecto 04 y evolucionando hasta el Proyecto 14, la arquitectura del software sigue una separación estricta en capas (Presentación -> Negocio -> Repositorio -> Acceso a Datos y Conexión Cloud):
 
 ```mermaid
 flowchart LR
@@ -153,15 +161,17 @@ flowchart LR
         Repositorio["Repositorio\n(PersonaRepository)\n• Agregación polimórfica (findAll)\n• Ruteo dinámico por instanceof (save/delete)"]
     end
 
-    subgraph Capa_Datos["Capa de Acceso a Datos (DAO)"]
+    subgraph Capa_Datos["Capa de Acceso a Datos (DAO & Cloud DB)"]
         ContratoDAO["Contrato Genérico\n(IDAO<T>)"]
-        DAOs["DAOs Especializados\n(AlumnoDAO, ProfesorDAO, UserDAO)\n• Lectura/deserialización Gson\n• Escritura Pretty Printing\n• Control de duplicidad"]
+        DAOs["DAOs Especializados\n(AlumnoDAO, ProfesorDAO, UserDAO)\n• Lectura/deserialización\n• Escritura y control de duplicidad"]
+        ConnCloud["Gestor de Conexión Cloud\n(ConnectionOracleCloudDB Singleton)\n• JDBC Thin + TNS_ADMIN\n• ojdbc11 + oraclepki"]
         Entidades["Entidades de Dominio\n(Persona abstracta, Alumno, Profesor,\nDireccion, User con @SuperBuilder)"]
         Excepciones["Excepciones Tipadas\n(DAOException)"]
     end
 
-    subgraph Almacenamiento["Almacenamiento de Datos"]
-        JSONFiles[("Archivos Planos JSON\nauthentication.json\nalumno.json / profesor.json\ndata.json (Pretty Printing)")]
+    subgraph Almacenamiento["Almacenamiento de Datos (Local & Cloud)"]
+        JSONFiles[("Archivos Planos JSON\nauthentication.json\nalumno.json / profesor.json")]
+        OracleDB[("Oracle Cloud Autonomous DB\nServicio: oracledb_high\n+ Wallet_oracledb (mTLS)")]
     end
 
     Vistas <--> Controladores
@@ -172,6 +182,7 @@ flowchart LR
     Repositorio --> ContratoDAO
     DAOs -.-> ContratoDAO
     DAOs <--> JSONFiles
+    ConnCloud <--> OracleDB
     DAOs --> Entidades
     Entidades -.-> Repositorio
     Servicios --> DTOs
@@ -184,13 +195,13 @@ flowchart LR
 El repositorio busca desarrollar competencias profesionales sólidas en el diseño e ingeniería de software orientado a objetos en Java:
 
 - **Pilares de POO**: Encapsulamiento, abstracción, herencia, polimorfismo, modularidad, relaciones entre objetos (**asociación y composición**) y separación de responsabilidades tanto en la capa de presentación como en la de dominio.
-- **Arquitectura y Patrones de Diseño**: Organización multicapa (Presentación, Servicio, Repositorio, DAO), uso de objetos de transferencia de datos (**DTO**) para el desacoplamiento y aplanamiento de datos (*data flattening*), abstracción genérica de fuentes de datos (**`IDAO<T>`**), orquestación polimórfica mediante el **Patrón Repository** (`PersonaRepository`) y patrón creacional **Singleton** para servicios universales sin estado.
+- **Arquitectura y Patrones de Diseño**: Organización multicapa (Presentación, Servicio, Repositorio, DAO), uso de objetos de transferencia de datos (**DTO**) para el desacoplamiento y aplanamiento de datos (*data flattening*), abstracción genérica de fuentes de datos (**`IDAO<T>`**), orquestación polimórfica mediante el **Patrón Repository** (`PersonaRepository`) y patrón creacional **Singleton** tanto para validación (`FormValidator`) como para conexiones a bases de datos (`ConnectionOracleCloudDB`).
 - **Patrones Creacionales y Reducción de Boilerplate**: Implementación del **patrón Builder** y uso de anotaciones avanzadas de **Lombok** (`@SuperBuilder`, `@Builder`, `@Getter`, `@Setter`, `@NoArgsConstructor`, `@AllArgsConstructor`) para soportar herencia en constructores tanto de DTOs como de Entidades (`Persona` -> `Alumno` / `Profesor`) y mantener un código limpio y mantenible.
-- **Manejo de Excepciones**: Creación y propagación de excepciones comprobadas personalizadas (`ValidationException`, `DAOException`) para modelar y aislar errores técnicos y de validación de negocio.
-- **Persistencia y Serialización Segregada**: Lectura, inserción, eliminación y serialización de archivos de texto plano en formato JSON (`alumno.json`, `profesor.json`, `authentication.json`) mediante **Google Gson**, gestionando tipos genéricos (`TypeToken`), formatos de fecha, estructuras anidadas y formato legible (**Pretty Printing**).
+- **Manejo de Excepciones**: Creación y propagación de excepciones comprobadas personalizadas (`ValidationException`, `DAOException`) y de infraestructura (`SQLException`) para modelar y aislar errores técnicos y de validación de negocio.
+- **Persistencia Híbrida (JSON Segregado y Oracle Cloud Autonomous Database)**: Lectura, inserción, eliminación y serialización en archivos JSON (`alumno.json`, `profesor.json`, `authentication.json`) mediante **Google Gson** (**Pretty Printing**), y conectividad empresarial hacia **Oracle Cloud Database** mediante **JDBC Thin (`ojdbc11`)**, **Oracle PKI (`oraclepki`)** y billeteras criptográficas **mTLS (`Wallet_oracledb`)**.
 - **Interfaces Gráficas (GUI) y Enlace de Datos**: Diseño de vistas declarativas con FXML, contenedores semánticos (`TitledPane`, `GridPane`, `VBox`), controles dinámicos (`ComboBox`, `CheckBox`), enlace de propiedades en tablas (`TableView`, `TableColumn`, `PropertyValueFactory`), recarga reactiva de datos y transición dinámica de escenarios con redimensionamiento y centrado adaptativo.
 - **Algoritmos y Validación de Negocio**: Implementación de lógica de verificación nacional mediante expresiones regulares (Regex) y cálculo aritmético de verificación por **Módulo 11**.
-- **Sistema de Módulos de Java (JPMS)**: Configuración rigurosa de `module-info.java`, gestionando directivas `requires`, `requires static`, `exports` y `opens ... to ...` para permitir reflexión controlada en tiempo de ejecución.
+- **Sistema de Módulos de Java (JPMS)**: Configuración rigurosa de `module-info.java`, gestionando directivas `requires` (incluyendo `java.sql`), `requires static`, `exports` y `opens ... to ...` para permitir reflexión controlada en tiempo de ejecución.
 
 ---
 
@@ -200,14 +211,15 @@ El repositorio busca desarrollar competencias profesionales sólidas en el dise�
 - **Java JDK**: 11 o superior (recomendado JDK 21).
 - **Apache Maven**: 3.8+.
 - **IDE**: IntelliJ IDEA, Visual Studio Code, Eclipse o NetBeans (con soporte para Lombok habilitado).
+- **Oracle Cloud Wallet** (para el Proyecto 14): Instancia `oracledb` activa en OCI y carpeta `Wallet_oracledb` configurada según la [Clase 13](13/README.md).
 
 ### Ejecutar cualquier proyecto
 
 Puedes ejecutar cualquiera de los proyectos entrando a su respectiva carpeta:
 
 ```bash
-# Ejemplo para ejecutar el proyecto 12
-cd 12/poo-javafx
+# Ejemplo para ejecutar el proyecto 14
+cd 14/poo-javafx
 mvn clean javafx:run
 ```
 
@@ -237,6 +249,9 @@ mvn -f 11/poo-javafx/pom.xml clean javafx:run
 
 # Ejecutar Proyecto 12
 mvn -f 12/poo-javafx/pom.xml clean javafx:run
+
+# Ejecutar Proyecto 14
+mvn -f 14/poo-javafx/pom.xml clean javafx:run
 ```
 
 ---
@@ -307,10 +322,18 @@ poo-javafx/
 │   ├── README.md          # Documentación arquitectónica y diagramas del Proyecto 11
 │   └── poo-javafx/
 │       └── README.md      # Guía paso a paso del Proyecto 11
-└── 12/                    # 12 - Patrón Repository, Interfaz Genérica IDAO<T>, Herencia en Entidades y Persistencia Segregada
-    ├── 12.png
-    ├── 12_02.png
-    ├── README.md          # Documentación arquitectónica y diagramas del Proyecto 12
+├── 12/                    # 12 - Patrón Repository, Interfaz Genérica IDAO<T>, Herencia en Entidades y Persistencia Segregada
+│   ├── 12.png
+│   ├── 12_02.png
+│   ├── README.md          # Documentación arquitectónica y diagramas del Proyecto 12
+│   └── poo-javafx/
+│       └── README.md      # Guía paso a paso del Proyecto 12
+├── 13/                    # 13 - Aprovisionamiento de Oracle Cloud Autonomous Database y Configuración de Wallet mTLS
+│   └── README.md          # Guía paso a paso de creación de BD en Oracle Cloud y descarga del Wallet
+└── 14/                    # 14 - Conexión a Oracle Cloud Database con JDBC Thin, Oracle Wallet mTLS y Patrón Singleton
+    ├── 14.png
+    ├── 14_02.png
+    ├── README.md          # Documentación arquitectónica y diagramas del Proyecto 14
     └── poo-javafx/
-        └── README.md      # Guía paso a paso del Proyecto 12
+        └── README.md      # Guía paso a paso del Proyecto 14
 ```
